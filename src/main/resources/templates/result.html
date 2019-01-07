@@ -10,23 +10,23 @@
 
 <body>
     <br><br>
-    <h2 style="color:green">Result</h2>
+    <h2 style="color:green;margin: 0 auto;">Result</h2>
     <br><br>
 
-    <ul class="list-group" style="width:300px">
-        <li class="list-group-item" th:text="'Name: ' + ${user.name}"></li>
-        <li class="list-group-item" th:text="'Age: ' + ${user.age}"></li>
-        <li class="list-group-item" th:text="'Gender: ' + ${user.gender}"></li>
-        <li class="list-group-item" th:text="'Email: ' + ${user.email}"></li>
-        <li class="list-group-item" th:text="'City: ' + ${user.city}"></li>
+    <ul class="list-group" style="width:300px;margin: 0 auto;">
+        <li class="list-group-item" th:text="'Name: ' + ${user.name}" style="margin: 20px auto;"></li>
+        <li class="list-group-item" th:text="'Age: ' + ${user.age}" style="margin: 20px auto;"></li>
+        <li class="list-group-item" th:text="'Gender: ' + ${user.gender}" style="margin: 20px auto;"></li>
+        <li class="list-group-item" th:text="'Email: ' + ${user.email}" style="margin: 20px auto;"></li>
+        <li class="list-group-item" th:text="'City: ' + ${user.city}" style="margin: 20px auto;"></li>
     </ul>
 
-    <h4>
-        <span class="glyphicon glyphicon-saved"></span>
+    <h4 style="margin: 20px auto;">
+        <span class="glyphicon glyphicon-saved" style="margin: 20px auto;"></span>
         Insert into MySQL successfully!
     </h4>
 
-    <a href="/greeting"><button type="button" class="btn btn-primary">Return to home</button></a>
+    <a href="/greeting"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>
     <a href="/all"><button type="button" class="btn btn-warning">See Records</button></a>
 </body>
 
