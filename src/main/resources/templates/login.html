@@ -15,7 +15,7 @@
     <br><br>
 
     <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
-    <form class="form-horizontal" role="form" action="#" th:action="@{/greeting}" th:object="${user}" method="post">
+    <form class="form-horizontal" role="form" action="#" th:action="@{/loginResult}" th:object="${user}" method="post">
 
         <div class="form-group" style="width:300px;margin: 20px auto;">
             <label for="name" class="col-sm-2 control-label">Name</label>
@@ -59,7 +59,6 @@
             </div>
         </div>
     </form>
-
 </div>
 
 </body>

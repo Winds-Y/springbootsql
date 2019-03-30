@@ -12,7 +12,7 @@
     <br><br>
     <h2 style="color:green;margin: 0 auto;">Result</h2>
     <br><br>
-
+    <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
     <ul class="list-group" style="width:300px;margin: 0 auto;">
         <li class="list-group-item" th:text="'Name: ' + ${user.name}" style="margin: 20px auto;"></li>
         <li class="list-group-item" th:text="'Age: ' + ${user.age}" style="margin: 20px auto;"></li>
@@ -26,8 +26,11 @@
         Insert into MySQL successfully!
     </h4>
 
-    <a href="/greeting"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>
-    <a href="/all"><button type="button" class="btn btn-warning">See Records</button></a>
+    <!--<a href="/greeting"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>-->
+    <a th:href="@{'/greeting'}"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>
+    <!--<a href="/all"><button type="button" class="btn btn-warning">See Records</button></a>-->
+    <a th:href="@{'/all'}"><button type="button" class="btn btn-warning">See Records</button></a>
+
 </body>
 
 </html>
