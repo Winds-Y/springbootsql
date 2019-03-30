@@ -1,12 +1,10 @@
 package com.example.springbootsql.controller;
 
+import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
 import com.example.springbootsql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -34,5 +32,13 @@ public class UserController {
 	@GetMapping(path="/alls")
 	public Iterable<User> getAllUsers() {
 		return userRepository.findAll();
+	}
+
+	@PostMapping("/restDistributeTask")
+	public void distributeTask(@ModelAttribute TaskMessage taskMessage){
+		System.out.println("in distributeTask");
+		System.out.println(taskMessage.getTaskName());
+		System.out.println(taskMessage.getTargetPersonUrl());
+		System.out.println(taskMessage.getTaskCode());
 	}
 }

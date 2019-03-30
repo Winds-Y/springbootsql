@@ -1,8 +1,11 @@
 package com.example.springbootsql.controller;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
+import com.example.springbootsql.repository.TaskMessageRepository;
 import com.example.springbootsql.repository.UserRepository;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
@@ -14,11 +17,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class BodyController {
     private final UserRepository userRepository;
+    private final TaskMessageRepository taskMessageRepository;
 
     @Autowired
-    public BodyController(UserRepository userRepository) {
+    public BodyController(UserRepository userRepository,TaskMessageRepository taskMessageRepository) {
         this.userRepository = userRepository;
+        this.taskMessageRepository=taskMessageRepository;
     }
+
 
 
     @GetMapping("/greeting")
@@ -58,13 +64,14 @@ public class BodyController {
         System.out.println("in loginPage");
         return "login";
     }
+
     @GetMapping("/tt")
     public String getStatic(){
         return "redirect:/success.html";
     }
 
     @PostMapping("/loginResult")
-    public String loginResult(@ModelAttribute User user){
+    public String loginResult(@ModelAttribute User user, Model model){
         System.out.println(user.getName());
         String name=user.getName();
         User newUser;
@@ -73,11 +80,23 @@ public class BodyController {
             System.out.println("in loginResult:用户不存在");
             return "redirect:/loginErr.html";
         }else {
+            TaskMessage taskMessage=new TaskMessage();
+            model.addAttribute("taskMessage",taskMessage);
             System.out.println("in loginResult:登陆成功");
             System.out.println(newUser.getCity());
             System.out.println(newUser.getEmail());
             System.out.println("in loginResult");
-            return "redirect:/index.html";
+//            return "redirect:/success.html";
+            return "main";
         }
+    }
+
+    @PostMapping("/distributeTask")
+    public void distributeTask(@ModelAttribute TaskMessage taskMessage){
+        System.out.println("in distributeTask");
+        System.out.println(taskMessage.getTaskName());
+        System.out.println(taskMessage.getTargetPersonUrl());
+        System.out.println(taskMessage.getTaskCode());
+        
     }
 }
