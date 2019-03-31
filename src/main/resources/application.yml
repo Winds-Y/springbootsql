@@ -10,3 +10,18 @@ spring:
     url: jdbc:mysql://localhost:3306/exercise?useSSL=false&&serverTimezone=UTC
     username: root
     password: 123456
+  kafka:
+    consumer:
+      enable-auto-commit: true
+      auto-offset-reset: earliest
+      bootstrap-servers: 154.8.139.155:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 65536
+        # 缓存容量
+      buffer-memory: 524288
+        # 服务器地址
+      bootstrap-servers: 154.8.139.155:9092

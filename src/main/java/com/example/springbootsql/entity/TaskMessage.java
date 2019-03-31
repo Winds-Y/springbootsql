@@ -1,5 +1,6 @@
 package com.example.springbootsql.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -12,10 +13,19 @@ public class TaskMessage {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @JSONField(serialize = false)
     private Integer id;
+
+    @JSONField(ordinal = 1)
     private String time;
+
+    @JSONField(ordinal = 2,name = "target_person_url")
     private String targetPersonUrl;
+
+    @JSONField(ordinal = 3,name = "task_code")
     private String taskCode;
+
+    @JSONField(ordinal = 4,name = "task_name")
     private String taskName;
 
     public Integer getId() {
