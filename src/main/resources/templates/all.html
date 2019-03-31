@@ -14,7 +14,8 @@
     <br><br>
     <h2 style="color:green">All Records in Table user</h2>
     <br><br>
-
+    <!--/*@thymesVar id="users" type="list"*/-->
+    <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
     <table class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
         <tr style="color:red">
             <th>NAME</th>
@@ -23,8 +24,7 @@
             <th>Email</th>
             <th>City</th>
         </tr>
-        <!--/*@thymesVar id="users" type="list"*/-->
-        <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
+
         <tr th:each="user : ${users}">
             <td th:text="${user.name}"></td>
             <td th:text="${user.age}"></td>

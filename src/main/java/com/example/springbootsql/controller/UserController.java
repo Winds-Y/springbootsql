@@ -4,7 +4,12 @@ import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
 import com.example.springbootsql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 public class UserController {
@@ -34,8 +39,15 @@ public class UserController {
 		return userRepository.findAll();
 	}
 
-	@PostMapping("/restDistributeTask")
-	public void distributeTask(@ModelAttribute TaskMessage taskMessage){
+
+	@RequestMapping("/restDistributeTask")
+	@ResponseBody
+	public void distributeTask(@ModelAttribute TaskMessage taskMessage, HttpServletResponse httpServletResponse) {
+		try {
+			httpServletResponse.getWriter().print(taskMessage.getTaskName());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println("in distributeTask");
 		System.out.println(taskMessage.getTaskName());
 		System.out.println(taskMessage.getTargetPersonUrl());

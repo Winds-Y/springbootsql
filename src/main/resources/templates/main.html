@@ -26,7 +26,11 @@
     
     <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">
     <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
-
+    <script>
+        function ceshi1() {
+            $('#btn').load("/fruit?id=0");
+        }
+    </script>
   </head>
   <body>
     <!-- =========
@@ -128,10 +132,12 @@
                 Start About tab content section
                 ===================================-->
                 <div id='about' class="tab-pane  fade in  active">
+                    <!--/*@thymesVar id="partial" type="java.lang.String"*/-->
+                    <h1 th:text="${partial}"></h1>
                   <div class="body-content">
 
                       <!--/*@thymesVar id="taskMessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
-                      <form style="top:100px;" class="form-horizontal" role="form" action="#" th:action="@{/restDistributeTask}" th:object="${taskMessage}" method="post">
+                      <form style="top:100px;" class="form-horizontal" role="form" action="#"  th:object="${taskMessage}" method="post">
 
                           <div class="form-group" style="width:300px;margin: 20px auto;">
                               <label for="name" class="col-sm-2 control-label">task name</label>
@@ -156,7 +162,7 @@
 
                           <div class="form-group" style="margin: 20px auto">
                               <div>
-                                  <button type="submit" class="btn btn-primary" id="btn">发送</button>
+                                  <button  type="submit" class="btn btn-primary" id="btn" onclick="ceshi1()">发送</button>
                                   <input type="reset" class="btn btn-warning" value="重置" />
                               </div>
                           </div>
