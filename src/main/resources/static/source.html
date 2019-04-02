@@ -1,115 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>D.Card Personal HTML Template</title>
     <!-- Bootstrap -->
-    <link th:href="@{'../bootstrap/css/bootstrap.min.css'}" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS Font Icon and Plugins -->
-    <link th:href="@{'../assets/font/fa/css/font-awesome.min.css'}"  rel="stylesheet">
-    <link th:href="@{'../assets/font/tello/css/fontello.css'}"  rel="stylesheet">
-    <link th:href="@{'../assets/css/magnific-popup.css'}"  rel="stylesheet">
-    <link th:href="@{'../assets/css/animation.css'}"  rel="stylesheet">
+    <link href="assets/font/fa/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/font/tello/css/fontello.css" rel="stylesheet">
+    <link href="assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="assets/css/animation.css" rel="stylesheet">
     <!-- Theme of Design -->
-    <link th:href="@{'../assets/css/style.css'}"  rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">   
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" th:href="@{'../assets/images/faicon.png'}" >
-    <link rel="apple-touch-icon" sizes="129x129" th:href="@{'../assets/images/icon.png'}">
+    <link rel="shortcut icon" href="assets/images/faicon.png">
+    <link rel="apple-touch-icon" sizes="129x129" href="assets/images/icon.png"> 
     
-    <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">
-    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
-    <script type="text/javascript" th:src="@{../bootstrap/js/jquery.min.js}"></script>
-    <script>
-        var websocket = null;
-        //判断当前浏览器是否支持WebSocket
-        if ('WebSocket' in window) {
-            websocket = new WebSocket('ws://localhost:8080/websocket');
-        }
-        else {
-            alert('当前浏览器 Not support websocket')
-        }
-
-        //连接发生错误的回调方法
-        websocket.onerror = function () {
-            setMessageInnerHTML("WebSocket连接发生错误");
-        };
-
-        //连接成功建立的回调方法
-        websocket.onopen = function () {
-            setMessageInnerHTML("WebSocket连接成功");
-        };
-
-        //接收到消息的回调方法
-        websocket.onmessage = function (event) {
-            setMessageInnerHTML(event.data);
-        };
-
-        //连接关闭的回调方法
-        websocket.onclose = function () {
-            setMessageInnerHTML("WebSocket连接关闭");
-        };
-
-        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-        window.onbeforeunload = function () {
-            closeWebSocket();
-        };
-
-        //将消息显示在网页上
-        function setMessageInnerHTML(innerHTML) {
-            // document.getElementById('message').innerHTML += innerHTML + '<br/>';
-            alert(innerHTML);
-        }
-
-        //关闭WebSocket连接
-        function closeWebSocket() {
-            websocket.close();
-        }
-
-        //发送消息
-        function send() {
-            var message = document.getElementById('text').value;
-            websocket.send(message);
-        }
-        function ceshi1(message) {
-            // alert('ceshi');
-            var name=$('#name').val();
-            var url=$('#url').val();
-            var taskCode =$('#taskCode').val();
-            var j={};
-            j.task_name=name;
-            j.target_person_url=url;
-            j.task_code=taskCode;
-            var jsonStr=JSON.stringify(j);
-            // alert(jsonStr);
-            $.ajax({
-                url:"/distributeTask",
-                data:{
-                    "jsonStr":jsonStr
-                },
-                type:"post",
-                dataType:"json",
-                success:function (res) {
-
-                },
-                error:function (msg) {
-
-                }
-            });
-            $('#name').val("");
-            $('#url').val("");
-            $('#taskCode').val("");
-            alert('发送成功！')
-            // $('#btn').load("/distributeTask");
-        }
-    </script>
+    <link href="assets/css/yourcss.css" rel="stylesheet">    
   </head>
   <body>
     <!-- =========
@@ -150,7 +65,7 @@
                 Start portrait image Section
                 ===================================-->
                 <div class="portrait-img-area">
-                  <img src="../assets/images/avatar.png" alt="avatar" class="avatar"/>
+                  <img src="assets/images/avatar.png" alt="avatar" class="avatar"/>
                   <!--<div class="profile-links">-->
                     <!--<a href="" class="facebook"  data-toggle="tooltip" data-placement="left" title="Facebook"><i class="fa fa-facebook"></i></a>-->
                     <!--<a href="" class="twitter"  data-toggle="tooltip" data-placement="right" title="Twitter"><i class="fa fa-twitter"></i></a>-->
@@ -163,11 +78,10 @@
                 <!-- =========
                 Start Show Yor Name Section
                 ===================================-->
-                  <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
-                <h1 class="name" th:text="${user.name}"><small>freelance web designer</small></h1>
-                <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
+                <h1 class="name">Jhonny Doe <small>freelance web designer</small></h1>
+                <img src="assets/images/arrow-down.png" alt="" class="img-arrow">
                 <a href="javascript:void(0)" class="btn btn-flat " id="open-content">Let's start!</a>
-                <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
+                <img src="assets/images/arrow-down.png" alt="" class="img-arrow">
                 <!-- =========
                 Start Show Yor Name Section
                 ===================================-->
@@ -207,50 +121,184 @@
               ===================================-->
               <div class="tab-content">
 
+
                 <!-- =========
                 Start About tab content section
                 ===================================-->
                 <div id='about' class="tab-pane  fade in  active">
-                    <!--/*@thymesVar id="partial" type="java.lang.String"*/-->
-                    <h1 th:text="${partial}"></h1>
                   <div class="body-content">
 
-                      <!--/*@thymesVar id="taskMessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
-                      <div id="part_div" style="top:100px;" class="form-horizontal"  th:fragment="part_div"  >
-
-                          <div class="form-group" style="width:300px;margin: 20px auto;">
-                              <label for="name" class="col-sm-2 control-label">task name</label>
-                              <div class="col-sm-10">
-                                  <input type="text"  class="form-control" id="name" placeholder="Enter target PersonUrl">
-                              </div>
-                          </div>
-
-                          <div class="form-group" style="width:300px;margin: 20px auto;">
-                              <label for="url" class="col-sm-2 control-label">URL</label>
-                              <div class="col-sm-10">
-                                  <input type="text"  class="form-control" id="url" placeholder="Enter target PersonUrl">
-                              </div>
-                          </div>
-
-                          <div class="form-group" style="width:300px;margin: 20px auto;">
-                              <label for="taskCode" class="col-sm-2 control-label">task code</label>
-                              <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="taskCode" placeholder="Enter taskCode">
-                              </div>
-                          </div>
-
-                          <div class="form-group" style="margin: 20px auto">
-                              <div>
-                                  <button class="btn btn-primary" id="btn" onclick="ceshi1()">发送</button>
-                                  <input type="reset" class="btn btn-warning" value="重置" />
-                              </div>
-                          </div>
+                    <!-- =========
+                    Start About your self section
+                    ===================================-->
+                    <div class="row">
+                      <div class="col-md-3 text-center">
+                        <img src="assets/images/avatar.png" alt="avatar" class="img-responsive img-profile">
                       </div>
+                      <div class="col-md-9">
+                        <div class="mini-desc">
+                          <h2 class="title">Hello, my name is Jhonny Doe!</h2>
+                          <p>Hi my name is Jhonny Doe, I'm graphic and web designer. My background is graphic design. I studied in exchange in Unknown Place, mostly studying editorial design.  </p>
+                          <p>I have been working on different kind of projects like: brand, web design, code, illustration. I have a passion for creating all kind of things related with visual arts like type, movies, photo...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- =========
+                    End About your self section
+                    ===================================-->
+
+                    <!-- =========
+                    Start List Indentity and services your self  section
+                    ===================================-->
+                    <div class="deviter"></div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h3 class="title with-icon"><i class="fa fa-credit-card icn-title"></i> Indentity</h3>
+                        <div class="identity-area">
+                          <div class="row">
+                            <div class="col-sm-4"><label>Fullname</label></div>
+                            <div class="col-sm-8"> Jhonny Doe</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Date of birth</label></div>
+                            <div class="col-sm-8"> September 11, 1990</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Address</label></div>
+                            <div class="col-sm-8"> Bandung, RE 878387, INA</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Phone</label></div>
+                            <div class="col-sm-8"> +1-222-786-1234</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Email</label></div>
+                            <div class="col-sm-8"> support@company.net</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Skype</label></div>
+                            <div class="col-sm-8"> yobi.setiawan</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4"><label>Website</label></div>
+                            <div class="col-sm-8"> <a target="_blank" href="https://wrapbootstrap.com/user/yobio">Yobio</a></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h3 class="title with-icon"><i class="fa fa-bell-o icn-title"></i> Services</h3>
+                        <div class="box-block">
+                          <ul class="list-unstyled list-strip">
+                            <li><i class="fa fa-check"></i> Slicing PSD to HTML</li>
+                            <li><i class="fa fa-check"></i> Create Wordpress Templates</li>
+                            <li><i class="fa fa-check"></i> Ruby On Rails Templates</li>
+                            <li><i class="fa fa-check"></i> Ruby On Rails Templates</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- =========
+                    End List Indentity and services your self section
+                    ===================================-->
+
+
+                    <!-- =========
+                    Start List fact your self section
+                    ===================================-->
+                    <div class="deviter"></div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h3 class="title with-icon"><i class="fa fa-check-square-o icn-title"></i> FACT</h3>
+                        <div class="box-fact-area">
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="box-fact">
+                                <i class="fa fa-star-o icn-fixed"></i> 132 PROJECTS COMPLETED
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="box-fact">
+                                <i class="fa fa-smile-o icn-fixed"></i> 130 HAPPY CLIENTS
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="box-fact">
+                                <i class="fa fa-globe  icn-fixed"></i> 32 GLOBAL PATNERS
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="box-fact">
+                                <i class="fa fa-calendar-o icn-fixed"></i> 20 YEARS EXPRERIENCE
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- =========
+                    End List fact your self section
+                    ===================================-->
+
+                    <!-- =========
+                    Start List your  client  and testimonial section
+                    ===================================-->
+                    <div class="deviter"></div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h3 class="title with-icon "><i class="fa fa-users icn-title"></i> Client</h3>
+                        <div class="box-block">
+                          <ul class="list-unstyled list-clients clearfix">
+                            <li><a href="#"><img src="assets/images/client/client.png"  alt="" class="img-responsive"></a></li>
+                            <li><a href="#"><img src="assets/images/client/client.png" alt="" class="img-responsive"></a></li>
+                            <li><a href="#"><img src="assets/images/client/client.png" alt="" class="img-responsive"></a></li>
+                            <li><a href="#"><img src="assets/images/client/client.png" alt="" class="img-responsive"></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h3 class="title with-icon"><i class="fa fa-comments-o icn-title"></i> Testimonial</h3>
+                        <div class="box-block">
+                          <div id='testimonial-slider' class="carousel slide" data-ride="carousel" data-interval="false">
+                            <div class="carousel-inner">
+                              <div class="item active">
+                                <div class="box-testimonial">
+                                  <div class="oComment">
+                                    <h5>interactive designer</h5>
+                                    <p> Jhonny Doe is an excellent designer and completed the project successfully. I would hire him again</p>
+                                    <div class="text-right date-post"><small>Post: 1 Minute Ago</small></div>
+                                  </div>
+                                  <img src="assets/images/avatar.png" alt=''>
+                                </div>
+                              </div>
+                              <div class="item ">
+                                <div class="box-testimonial">
+                                  <div class="oComment">
+                                    <h5>interactive designer</h5>
+                                    <p> Jhonny Doe is an excellent designer and completed the project successfully. I would hire him again</p>
+                                    <div class="text-right date-post"><small>Post: 1 Minute Ago</small></div>
+                                  </div>
+                                  <img src="assets/images/avatar.png" alt=''>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="control-testi-slider">
+                              <a href="#testimonial-slider" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+                              <a href="#testimonial-slider" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- =========
+                    End List your  client  and testimonial section
+                    ===================================-->
+
                   </div>
                 </div>
                 <!-- =========
                 End About tab content section
                 ===================================-->
+
 
 
                 <!-- =========
@@ -474,9 +522,9 @@
                     <ul id='portfolio-grid' class="list-unstyled grid-portfolio">
                       <li class="mix webdesign">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
@@ -485,7 +533,7 @@
                         <div class="item-portfolio">
                           <a href="http://www.youtube.com/watch?v=0O2aH4XLbto" class="preview-portfolio imgWrapper popup-iframe">
                             <div class="mask"><div class="icn-center"><i class="fa fa-youtube "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
@@ -494,7 +542,7 @@
                         <div class="item-portfolio">
                           <a href="https://vimeo.com/45830194" class="preview-portfolio imgWrapper popup-iframe">
                             <div class="mask"><div class="icn-center"><i class="fa fa-vimeo-square "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
@@ -503,16 +551,16 @@
                         <div class="item-portfolio">
                           <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&amp;hl=en&amp;t=v&amp;hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="preview-portfolio imgWrapper popup-iframe">
                             <div class="mask"><div class="icn-center"><i class="fa fa-map-marker "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
                       </li>
                       <li class="mix mobileapp">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
 
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
@@ -521,36 +569,36 @@
                       </li>
                       <li class="mix webdesign">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
                       </li>
                       <li class="mix webdesign">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
                       </li>
                       <li class="mix mobileapp">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
                       </li>
                       <li class="mix websiteapp">
                         <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
+                          <a href="assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
                             <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
+                            <img src="assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
                           </a>
                           <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
                         </div>
@@ -595,7 +643,7 @@
                             </div>
                             <div class="body-post">
                               <div class="imgWrapper">
-                                <img src="../assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
+                                <img src="assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
                               </div>
                               <p>Designer focuses on writing clean. by <strong>UnKown</strong></p>
                               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
@@ -620,7 +668,7 @@
                             </div>
                             <div class="body-post">
                               <div class="imgWrapper">
-                                <img src="../assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
+                                <img src="assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
                                 <div class="playbtn">
                                   <a href="https://vimeo.com/45830194" class="popup-iframe"><span class="fa-4x fa fa-play"></span></a>
                                 </div>
@@ -779,21 +827,21 @@
     <script src="https://code.jquery.com/jquery.js"></script>
 
     <!-- jQuery animation page loader -->
-    <script src='../assets/js/pace.min.js'></script>
+    <script src='assets/js/pace.min.js'></script>
 
     <!-- JS maps for gmap3 JavaScript plugins) -->
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../bootstrap/js/bootstrap.js"></script>
-    <script src="../assets/js/jquery.autofix_anything.js"></script>
-    <script src="../assets/js/jquery.mixitup.min.js"></script>
-    <script src='../assets/js/gmap3.min.js'></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.autofix_anything.js"></script>
+    <script src="assets/js/jquery.mixitup.min.js"></script>
+    <script src='assets/js/gmap3.min.js'></script>
 
-    <script src='../assets/js/jquery.magnific-popup.min.js'></script>
+    <script src='assets/js/jquery.magnific-popup.min.js'></script>
 
     <!-- Configuration app js -->
-    <script src="../assets/js/app.js"></script>
+    <script src="assets/js/app.js"></script>
 
   </body>
 </html>

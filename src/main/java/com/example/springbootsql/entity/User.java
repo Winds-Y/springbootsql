@@ -15,8 +15,17 @@ public class User {
     private Integer age;
     private String city;
     private String gender;
+    private String password;
 
-	public Integer getAge() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getAge() {
 		return age;
 	}
 

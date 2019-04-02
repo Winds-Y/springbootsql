@@ -7,6 +7,8 @@ import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
 import com.example.springbootsql.repository.TaskMessageRepository;
 import com.example.springbootsql.repository.UserRepository;
+import com.example.springbootsql.utils.MD5;
+import com.example.springbootsql.utils.SysKafkaConsumer;
 import com.example.springbootsql.utils.SysKafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.RequestWrapper;
 import java.io.IOException;
@@ -50,6 +53,7 @@ public class BodyController {
         System.out.println(user.getAge());
         User newUser = new User();
 
+        newUser.setPassword(MD5.encode2hex(user.getPassword()));
         newUser.setName(user.getName());
         newUser.setAge(user.getAge());
         newUser.setGender(user.getGender());
@@ -84,20 +88,35 @@ public class BodyController {
     public String loginResult(@ModelAttribute User user, Model model){
         System.out.println(user.getName());
         String name=user.getName();
+        String password=user.getPassword();
+        String secretPass= MD5.encode2hex(password);
         User newUser;
-        newUser=userRepository.findByName(name);
-        if(newUser==null){
+        newUser=userRepository.findByNameAndPassword(name,secretPass);
+        if(userRepository.findByName(name)== null){
             System.out.println("in loginResult:用户不存在");
             return "redirect:/loginErr.html";
         }else {
-            TaskMessage taskMessage=new TaskMessage();
-            model.addAttribute("taskMessage",taskMessage);
-            System.out.println("in loginResult:登陆成功");
-            System.out.println(newUser.getCity());
-            System.out.println(newUser.getEmail());
-            System.out.println("in loginResult");
+            if(newUser==null){
+                System.out.println("in loginResult:密码错误");
+                return "redirect:/loginErr.html";
+            }else {
+                TaskMessage taskMessage=new TaskMessage();
+                model.addAttribute("taskMessage",taskMessage);
+                System.out.println("in loginResult:登陆成功");
+                System.out.println("启动kafka");
+                Thread startKafkaThread=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SysKafkaConsumer.consume();
+                    }
+                });
+                startKafkaThread.start();
+                System.out.println(newUser.getCity());
+                System.out.println(newUser.getEmail());
+                System.out.println("in loginResult");
 //            return "redirect:/success.html";
-            return "main";
+                return "main";
+            }
         }
     }
 
@@ -123,6 +142,18 @@ public class BodyController {
         System.out.println(newJsonStr);
         kafkaTemplate.send("cuc_receive_target_url",newJsonStr);
         return "main::part_div";
+    }
+
+    @GetMapping("/websocket")
+    public String testWebSocket(Model model){
+        return "websocket";
+    }
+
+    @GetMapping("/")
+    public String index(Model model){
+        model.addAttribute("user", new User());
+        System.out.println("in loginPage");
+        return "login";
     }
 
 //    @KafkaListener(topics = {"cuc_receive_target_url"})
