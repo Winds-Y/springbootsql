@@ -1,5 +1,6 @@
 package com.example.springbootsql.component;
 
+import com.example.springbootsql.test.Test;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -22,6 +23,8 @@ public class WebSockTest {
         System.out.println("有新连接加入！当前在线人数为"+getOnlineCount());
     }
 
+
+
     @OnClose
     public void onClose(){
         webSocketSet.remove(this);
@@ -31,6 +34,9 @@ public class WebSockTest {
 
     @OnMessage
     public void onMessage(String message, Session session){
+        if(message.equals("kafkastop")){
+            Test.run=false;
+        }
         System.out.println("来自客户端的消息："+message);
 //        群发消息
         for (WebSockTest item:webSocketSet){
@@ -47,7 +53,7 @@ public class WebSockTest {
         System.out.println("发生错误！");
         throwable.printStackTrace();
     }
-    //   下面是自定义的一些方法
+    //
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }

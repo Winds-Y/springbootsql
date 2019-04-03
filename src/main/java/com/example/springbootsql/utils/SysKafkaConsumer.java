@@ -1,17 +1,13 @@
 package com.example.springbootsql.utils;
 
-import com.example.springbootsql.component.SysKafkaClient;
-import com.example.springbootsql.component.WebSocket;
+import com.example.springbootsql.component.SyWebSocketClient;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.springframework.context.annotation.Primary;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Properties;
-
-import static com.example.springbootsql.component.WebSocket.wbSockets;
 
 
 public class SysKafkaConsumer {
@@ -37,7 +33,9 @@ public class SysKafkaConsumer {
                 System.out.printf("offset = %d, key = %s, value = %s\n",record1.offset(), record1.key(), record1.value());
                 String message=record1.value();
                 try {
-                    SysKafkaClient.session.getBasicRemote().sendText(message);
+                    //send ui message
+                    SyWebSocketClient.session.getBasicRemote().sendText(message);
+//                    SyWebSocketClient.session.getBasicRemote().sendObject();
                     System.out.println("kafka send message to websocket");
                 } catch (IOException e) {
                     e.printStackTrace();

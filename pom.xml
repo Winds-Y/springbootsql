@@ -189,6 +189,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+            <!-- or, for Android: -->
+        </dependency>
 
     </dependencies>
 

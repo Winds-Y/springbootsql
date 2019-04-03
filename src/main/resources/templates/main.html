@@ -27,90 +27,9 @@
     <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">
     <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <script type="text/javascript" th:src="@{../bootstrap/js/jquery.min.js}"></script>
-    <script>
-        var websocket = null;
-        //判断当前浏览器是否支持WebSocket
-        if ('WebSocket' in window) {
-            websocket = new WebSocket('ws://localhost:8080/websocket');
-        }
-        else {
-            alert('当前浏览器 Not support websocket')
-        }
 
-        //连接发生错误的回调方法
-        websocket.onerror = function () {
-            setMessageInnerHTML("WebSocket连接发生错误");
-        };
-
-        //连接成功建立的回调方法
-        websocket.onopen = function () {
-            setMessageInnerHTML("WebSocket连接成功");
-        };
-
-        //接收到消息的回调方法
-        websocket.onmessage = function (event) {
-            setMessageInnerHTML(event.data);
-        };
-
-        //连接关闭的回调方法
-        websocket.onclose = function () {
-            setMessageInnerHTML("WebSocket连接关闭");
-        };
-
-        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-        window.onbeforeunload = function () {
-            closeWebSocket();
-        };
-
-        //将消息显示在网页上
-        function setMessageInnerHTML(innerHTML) {
-            // document.getElementById('message').innerHTML += innerHTML + '<br/>';
-            alert(innerHTML);
-        }
-
-        //关闭WebSocket连接
-        function closeWebSocket() {
-            websocket.close();
-        }
-
-        //发送消息
-        function send() {
-            var message = document.getElementById('text').value;
-            websocket.send(message);
-        }
-        function ceshi1(message) {
-            // alert('ceshi');
-            var name=$('#name').val();
-            var url=$('#url').val();
-            var taskCode =$('#taskCode').val();
-            var j={};
-            j.task_name=name;
-            j.target_person_url=url;
-            j.task_code=taskCode;
-            var jsonStr=JSON.stringify(j);
-            // alert(jsonStr);
-            $.ajax({
-                url:"/distributeTask",
-                data:{
-                    "jsonStr":jsonStr
-                },
-                type:"post",
-                dataType:"json",
-                success:function (res) {
-
-                },
-                error:function (msg) {
-
-                }
-            });
-            $('#name').val("");
-            $('#url').val("");
-            $('#taskCode').val("");
-            alert('发送成功！')
-            // $('#btn').load("/distributeTask");
-        }
-    </script>
   </head>
+  <!--210: send task-->
   <body>
     <!-- =========
     Start Wrapper Page
@@ -190,8 +109,8 @@
               ===================================-->
               <nav id='navigation'>
                 <ul class="navigation-list clearfix list-unstyled">
-                  <li class="active"><a href="#about" data-toggle="tab" data-menu="about"><i class="icon-user"></i> <span>About Me</span></a></li>
-                  <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Resume</span></a></li>
+                  <li class="active"><a href="#about" data-toggle="tab" data-menu="about"><i class="icon-pencil"></i> <span>send task</span></a></li>
+                  <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Task progress</span></a></li>
                   <li><a href="#portfolio" data-toggle="tab" data-menu="portfolio"><i class="icon-folder-open"></i> <span>Portfolio</span></a></li>
                   <li><a href="#blog" data-toggle="tab" data-menu="blog"><i class="icon-pencil"></i> <span >Blog</span></a></li>
                   <li><a href="#contact" data-toggle="tab" data-menu="contact"><i class="icon-mail"></i> <span>Contact</span></a></li>
@@ -208,7 +127,7 @@
               <div class="tab-content">
 
                 <!-- =========
-                Start About tab content section
+                Start Send task tab content section
                 ===================================-->
                 <div id='about' class="tab-pane  fade in  active">
                     <!--/*@thymesVar id="partial" type="java.lang.String"*/-->
@@ -232,12 +151,6 @@
                               </div>
                           </div>
 
-                          <div class="form-group" style="width:300px;margin: 20px auto;">
-                              <label for="taskCode" class="col-sm-2 control-label">task code</label>
-                              <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="taskCode" placeholder="Enter taskCode">
-                              </div>
-                          </div>
 
                           <div class="form-group" style="margin: 20px auto">
                               <div>
@@ -249,197 +162,41 @@
                   </div>
                 </div>
                 <!-- =========
-                End About tab content section
+                End Send task  tab content section
                 ===================================-->
 
 
                 <!-- =========
-                Start resume tab content section
+                Start task progress tab content section
                 ===================================-->
+
                 <div id='resume' class="tab-pane fade">
-                  <div class="body-content">
-                    <div class="row">
-                      <div class="col-md-8">
-
-
-                        <!-- =========
-                        Start Time line section
-                        ===================================-->
-                        <h3 class="title with-icon"><span class="glyphicon glyphicon-plane icn-title"></span> Work History</h3>
+                    <div class="body-content">
                         <div class="box-block">
-                          <div class="time-line">
-                            <div class="item-event current">
-                              <span class="date">2014</span>
-                              <div class="event-content">
-                                <h4>Web Designer</h4>
-                                <h5>Google Inc.</h5>
-                                <p>I worked as a Web Developer at Google for 2 years. I create usable web interfaces, front end coding stuff and almost anything. But i love what i do.</p>
-                              </div>
-                            </div>
-                            <div class="item-event">
-                              <span class="date">2013</span>
-                              <div class="event-content">
-                                <h4>Front End Web Developer</h4>
-                                <h5>Wrapbootstrap Inc.</h5>
-                                <p>As a web designer and developer, my objective is to make a positive impact on clients using my skills and experience to design compelling and building attractive websites.</p>
-                              </div>
-                            </div>
-                            <div class="item-event last">
-                              <span class="date">2012</span>
-                              <div class="event-content">
-                                <h4>Other Job</h4>
-                                <h5>Unknown Inc.</h5>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- =========
-                        End Time line section
-                        ===================================-->
+                            <ul class="list-unstyled list-skills" id="add_progress_bar">
 
-                        <!-- =========
-                        Start Time line section
-                        ===================================-->
-                        <div class="deviter"></div>
-                        <h3 class="title with-icon"><span class="fa fa-book icn-title"></span> Education History</h3>
-                        <div class="box-block">
-                          <div class="time-line">
-                            <div class="item-event current">
-                              <span class="date">2011</span>
-                              <div class="event-content">
-                                <h4>Web Designer</h4>
-                                <h5 >Google University.</h5>
-                                <p>I worked as a Web Developer at Google for 2 years. I create usable web interfaces, front end coding stuff and almost anything. But i love what i do.</p>
-                              </div>
-                            </div>
-                            <div class="item-event">
-                              <span class="date">2008</span>
-                              <div class="event-content">
-                                <h4>Front End Web Developer</h4>
-                                <h5>Wrapbootstrap University.</h5>
-                                <p>As a web designer and developer, my objective is to make a positive impact on clients using my skills and experience to design compelling and building attractive websites.</p>
-                              </div>
-                            </div>
-                            <div class="item-event last">
-                              <span class="date">2006</span>
-                              <div class="event-content">
-                                <h4>Other Education</h4>
-                                <h5>Unknown University.</h5>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- =========
-                        End Time line section
-                        ===================================-->
-
-                      </div>
-                      <div class="col-md-4">
-                        <h3 class="title with-icon"><span class="fa fa-code icn-title"></span> Programming Skills</h3>
-                        <div class="box-block">
-
-
-                          <!-- =========
-                          STart your Skills Progress bars section
-                          ===================================-->
-                          <ul class="list-unstyled list-skills">
-                            <li>
-                              <span class="caption-skill">Ruby On Rails</span>
-                              <div class="progress">
-                                <div class="progress-bar" style="width: 90%;">
-                                  <span>90% </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <span class="caption-skill">PHP</span>
-                              <div class="progress">
-                                <div class="progress-bar" style="width: 80%;">
-                                  <span>80% </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <span class="caption-skill">HTML</span>
-                              <div class="progress">
-                                <div class="progress-bar" style="width: 95%;">
-                                  <span>95% </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <span class="caption-skill">MYSQL</span>
-                              <div class="progress">
-                                <div class="progress-bar"  style="width: 85%;">
-                                  <span>85% </span>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                          <!-- =========
-                          End your Skills Progress bars section
-                          ===================================-->
-
-                        </div>
-                        <div class="deviter"></div>
-                        <h3 class="title with-icon"><span class="fa fa-pencil icn-title"></span> Graphic Skills</h3>
-                        <div class="box-block">
-
-                          <!-- =========
-                          STart your Skills Progress point bars section
-                          ===================================-->
-                          <ul class="list-unstyled list-points-progress">
-                            <li>
-                              <span class="caption-skill">PhotoShop</span>
-                              <div class="pogress-point">
-                                <span class="point-indicator">90%</span>
-                                <div class="progress-bar-point" style="width: 90%;"></div>
-                              </div>
-                            </li>
-                            <li>
-                              <span class="caption-skill">CorelDraw</span>
-                              <div class="pogress-point">
-                                <span class="point-indicator">70%</span>
-                                <div class="progress-bar-point" style="width: 70%;"></div>
-                              </div>
-                            </li>
-                            <li>
-                              <span class="caption-skill">3D Max</span>
-                              <div class="pogress-point">
-                                <span class="point-indicator">80%</span>
-                                <div class="progress-bar-point" style="width: 80%;"></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <!-- =========
-                          STart your Skills Progress point bars section
-                          ===================================-->
+                            </ul>
 
 
                         </div>
-                        <div class="deviter"></div>
-                        <h3 class="title with-icon"><span class="fa fa-globe icn-title"></span> Language Skills</h3>
-                        <div class="box-block">
-                          <ul class="list-unstyled list-strip">
-                            <li><i class="fa fa-check"></i> English</li>
-                            <li><i class="fa fa-check"></i> Indonesia</li>
-                            <li><i class="fa fa-check"></i> Bahasa Sunda</li>
-                          </ul>
-                        </div>
-                        <div class="deviter"></div>
-                        <h3 class="title with-icon"><span class="fa fa-file icn-title"></span> Download Cv</h3>
-                        <div class="box-block">
-                          <p>You can download my CV in pdf format if you like. I love what i do.</p>
-                          <a href="#" class="btn btn-flat btn-block"><i class="fa fa-download"></i> Download</a>
-                          <div class="text-center">Or</div>
-                          <a href="#" class="btn btn-flat btn-block style2"><i class="fa fa-print"></i> Print</a>
-                        </div>
-                      </div>
+                        <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
+                        <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
+                        <table id="process_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
+                            <tr style="color:red">
+                                <th>TIME</th>
+                                <th>TASKCODE</th>
+                                <th>URL</th>
+                                <th>PROCESS</th>
+                            </tr>
+                            <tr th:each="taskmessage : ${taskFromData}">
+                                <td th:text="${taskmessage.time}"></td>
+                                <td th:text="${taskmessage.taskCode}"></td>
+                                <td th:text="${taskmessage.targetPersonUrl}"></td>
+                                <td th:text="${taskmessage.progress}"></td>
+                            </tr>
+                        </table>
                     </div>
-
-                  </div>
+                    <label id="clock"></label>
 
                 </div>
                 <!-- =========
@@ -796,4 +553,191 @@
     <script src="../assets/js/app.js"></script>
 
   </body>
+  <script>
+      var int=self.setInterval("clock()",50);
+      function clock() {
+          var realTime=new Date();
+          document.getElementById("clock").innerHTML=realTime;
+      }
+      var websocket = null;
+      var dataQueryWebSocket=null;
+      //判断当前浏览器是否支持WebSocket
+      if ('WebSocket' in window) {
+          websocket = new WebSocket('ws://localhost:8080/websocket');
+          dataQueryWebSocket=new WebSocket('ws://localhost:8080/freshDatabase');
+      }
+      else {
+          alert('当前浏览器 Not support websocket')
+      }
+
+      //连接发生错误的回调方法
+      websocket.onerror = function () {
+          setMessageInnerHTML("WebSocket连接发生错误");
+      };
+
+      //连接成功建立的回调方法
+      websocket.onopen = function () {
+          setMessageInnerHTML("WebSocket连接成功");
+      };
+
+      //接收到消息的回调方法
+      websocket.onmessage = function (event) {
+          setMessageInnerHTML(event.data);
+      };
+
+      //连接关闭的回调方法
+      websocket.onclose = function () {
+          setMessageInnerHTML("WebSocket连接关闭");
+      };
+
+      window.onbeforeunload=function () {
+          websocket.close();
+      };
+
+      dataQueryWebSocket.onerror = function () {
+          setMessageInnerHTML("dataQueryWebSocket连接发生错误");
+      };
+
+      //连接成功建立的回调方法
+      dataQueryWebSocket.onopen = function () {
+          setMessageInnerHTML("dataQueryWebSocket连接成功");
+      };
+
+      //接收到消息的回调方法
+      dataQueryWebSocket.onmessage = function (event) {
+          setMessageInnerHTML(event.data);
+          refreshData(event.data)
+      };
+      function refreshData(jsonStr){
+          var jsonArray=$.parseJSON(jsonStr);
+          var data_len=jsonArray.length;
+          var table=document.getElementById('process_table');
+          console.log('data length: '+data_len);
+          var trs=table.getElementsByTagName('tr');
+          for(var j=trs.length-1;j>1;j--){
+              table.deleteRow(j);
+          }
+          $("#add_progress_bar li").remove();
+
+          for(var k=0;k<data_len;k++){
+              var oTr=document.createElement('tr');
+              for(var m=0;m<4;m++){
+                  var oTd=document.createElement('td');
+                  oTr.appendChild(oTd);
+              }
+              table.appendChild(oTr);
+          }
+
+          console.log("table length"+table.rows.length);
+          for(var i=0;i<data_len;i++){
+              var col=table.rows[i+1].cells;
+              var jsonObject=jsonArray[i];
+              col[0].innerHTML =jsonObject.time;
+              col[1].innerHTML =jsonObject.task_code;
+              col[2].innerHTML=jsonObject.task_name;
+              col[3].innerHTML=jsonObject.task_progress;
+              console.log(jsonObject.task_progress);
+              var task_progress=jsonObject.task_progress+'%';
+              var task_code=jsonObject.task_code;
+              var txt='<li><span class="caption-skill">'+task_code+'</span><div class="progress"><div class="progress-bar" style="width: '+task_progress+';"><span>'+task_progress+'</span></div></div></li>';
+              $('#add_progress_bar').append(txt);
+          }
+      }
+
+      //连接关闭的回调方法
+      dataQueryWebSocket.onclose = function () {
+          setMessageInnerHTML("dataQueryWebSocket连接关闭");
+      };
+
+      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+      window.onbeforeunload = function () {
+          websocket.send('kafkastop');
+          closeWebSocket();
+      };
+
+      //将消息显示在网页上
+      function setMessageInnerHTML(innerHTML) {
+          // document.getElementById('message').innerHTML += innerHTML + '<br/>';
+          console.log(innerHTML);
+      }
+
+      //关闭WebSocket连接
+      function closeWebSocket() {
+          websocket.close();
+      }
+
+      //发送消息
+      function send() {
+          var message = document.getElementById('text').value;
+          websocket.send(message);
+      }
+      function ceshi1(message) {
+          // alert('ceshi');
+          var name=$('#name').val();
+          var url=$('#url').val();
+
+          var myDate=new Date();
+          var now=myDate.getTime();
+
+          var taskCode =now+uuid(8,16);
+          var j={};
+          j.task_name=name;
+          j.target_person_url=url;
+          j.task_code=taskCode;
+          var jsonStr=JSON.stringify(j);
+          // alert(jsonStr);
+          $.ajax({
+              url:"/distributeTask",
+              data:{
+                  "jsonStr":jsonStr
+              },
+              type:"post",
+              dataType:"json",
+              success:function (res) {
+
+              },
+              error:function (msg) {
+
+              }
+          });
+          $('#name').val("");
+          $('#url').val("");
+          var xxx1='XXX1';
+          var num='90%';
+          var txt='<li><span class="caption-skill">'+xxx1+'</span><div class="progress"><div class="progress-bar" style="width: '+num+';"><span>'+num+'</span></div></div></li>';
+
+          $('#add_progress_bar').append(txt);
+
+          alert('发送成功！')
+          // $('#btn').load("/distributeTask");
+      }
+      function uuid(len, radix) {
+          var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+          var uuid = [], i;
+          radix = radix || chars.length;
+
+          if (len) {
+              // Compact form
+              for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+          } else {
+              // rfc4122, version 4 form
+              var r;
+
+              // rfc4122 requires these characters
+              uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+              uuid[14] = '4';
+
+              // Fill in random data.  At i==19 set the high bits of clock sequence as
+              // per rfc4122, sec. 4.1.5
+              for (i = 0; i < 36; i++) {
+                  if (!uuid[i]) {
+                      r = 0 | Math.random()*16;
+                      uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                  }
+              }
+          }
+
+          return uuid.join('');
+      }
+  </script>
 </html>

@@ -28,6 +28,17 @@ public class TaskMessage {
     @JSONField(ordinal = 4,name = "task_name")
     private String taskName;
 
+    @JSONField(ordinal = 5,name = "task_progress")
+    private int progress=0;
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -67,6 +78,7 @@ public class TaskMessage {
     public void setTaskCode(String taskCode) {
         this.taskCode = taskCode;
     }
+
 
     @Override
     public String toString() {

@@ -1,11 +1,13 @@
 package com.example.springbootsql.test;
 
 
-import com.example.springbootsql.component.SysKafkaClient;
+import com.example.springbootsql.component.SyWebSocketClient;
+import com.example.springbootsql.component.TestKafkaConsumer;
 
 import java.io.IOException;
 
 public class Test {
+    public static boolean run;
     public static void main(String[] args) {
 //        String serverUrl="ws://localhost:8080/websocket";
 //        try {
@@ -16,11 +18,11 @@ public class Test {
 //        } catch (URISyntaxException e) {
 //            e.printStackTrace();
 //        }
-        try {
-            SysKafkaClient.session.getBasicRemote().sendText("hello");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        TestStatic.testStatic();
+//        try {
+//            SyWebSocketClient.session.getBasicRemote().sendText("hello");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        run=false;
     }
 }

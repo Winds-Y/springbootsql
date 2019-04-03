@@ -2,14 +2,19 @@ package com.example.springbootsql.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.springbootsql.component.DataWebSocketClient;
+import com.example.springbootsql.component.TestKafkaConsumer;
 import com.example.springbootsql.entity.TestPartFresh;
 import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
 import com.example.springbootsql.repository.TaskMessageRepository;
 import com.example.springbootsql.repository.UserRepository;
+import com.example.springbootsql.test.Test;
 import com.example.springbootsql.utils.MD5;
 import com.example.springbootsql.utils.SysKafkaConsumer;
 import com.example.springbootsql.utils.SysKafkaProducer;
+import com.google.common.collect.Lists;
+import org.apache.logging.log4j.core.config.plugins.util.ResolverUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -52,14 +57,17 @@ public class BodyController {
         System.out.println("in greetingSubmit");
         System.out.println(user.getAge());
         User newUser = new User();
-
+        if(userRepository.findByName(user.getName())!=null){
+            System.out.println("用户名已存在");
+            return "login";
+        }
         newUser.setPassword(MD5.encode2hex(user.getPassword()));
         newUser.setName(user.getName());
         newUser.setAge(user.getAge());
         newUser.setGender(user.getGender());
         newUser.setEmail(user.getEmail());
         newUser.setCity(user.getCity());
-        userRepository.save(user);
+        userRepository.save(newUser);
 
         return "result";
 
@@ -104,17 +112,57 @@ public class BodyController {
                 model.addAttribute("taskMessage",taskMessage);
                 System.out.println("in loginResult:登陆成功");
                 System.out.println("启动kafka");
-                Thread startKafkaThread=new Thread(new Runnable() {
+//                Thread startKafkaThread=new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        SysKafkaConsumer.consume();
+//                    }
+//                });
+//                startKafkaThread.start();
+                TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
+                consumerKafka.start();
+
+                Test.run=true;
+
+                Thread queryData=new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SysKafkaConsumer.consume();
+                        while (Test.run){
+                            Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
+                            List<TaskMessage>taskList= Lists.newArrayList(tasks);
+                            String jsonStr=JSON.toJSONString(taskList);
+                            System.out.println("queryData----: "+jsonStr);
+                            DataWebSocketClient.session.getAsyncRemote().sendText(jsonStr);
+                            try {
+                                Thread.sleep(1000*60);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 });
-                startKafkaThread.start();
+                queryData.start();
+
+
+                Thread watch=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(true){
+                            if(!Test.run){
+                                consumerKafka.stop();
+                                queryData.stop();
+                            }
+                        }
+                    }
+                });
+                watch.start();
+
+                Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
+                model.addAttribute("taskFromData", tasks);
+
                 System.out.println(newUser.getCity());
                 System.out.println(newUser.getEmail());
                 System.out.println("in loginResult");
-//            return "redirect:/success.html";
                 return "main";
             }
         }
