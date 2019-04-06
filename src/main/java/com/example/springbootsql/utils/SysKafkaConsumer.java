@@ -34,10 +34,10 @@ public class SysKafkaConsumer {
                 String message=record1.value();
                 try {
                     //send ui message
-                    SyWebSocketClient.session.getBasicRemote().sendText(message);
+//                    SyWebSocketClient.session.getBasicRemote().sendText(message);
 //                    SyWebSocketClient.session.getBasicRemote().sendObject();
                     System.out.println("kafka send message to websocket");
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

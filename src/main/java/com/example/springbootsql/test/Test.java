@@ -21,6 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
+import java.util.Scanner;
 
 @Controller
 public class Test {
@@ -43,8 +45,6 @@ public class Test {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
-        consumerKafka.start();
 
     }
 }

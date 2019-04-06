@@ -10,7 +10,7 @@ public class DBConnFactory {
     private static PreparedStatement stmt=null;
     private static ResultSet rs=null;
     private static String sql;
-    public static void initDBconn () {
+    static void initDBconn() {
         try {
             String driverName = "com.mysql.cj.jdbc.Driver";
             Class.forName(driverName);
@@ -23,21 +23,21 @@ public class DBConnFactory {
             e.printStackTrace();
         }
     }
-    public static void setSql(String sql) throws SQLException {
+    static void setSql(String sql) throws SQLException {
         DBConnFactory.sql=sql;
         stmt=(PreparedStatement) con.prepareStatement(sql);
     }
-    public static void cbsetString(int index,String value) throws SQLException {
+    static void cbsetString(int index, String value) throws SQLException {
        stmt.setString(index,value);
     }
-    public static void cbsetInt(int index,int value) throws SQLException {
+    static void cbsetInt(int index, int value) throws SQLException {
        stmt.setInt(index,value);
     }
     public static void cbsetBinaryStream(int index, FileInputStream in) throws IOException, SQLException {
        //stmt.setBinaryStream(index,in,in.available());
        stmt.setBlob(index,in,in.available());
     }
-    public static ResultSet executeQuery() {
+    static ResultSet executeQuery() {
         try {
             rs=stmt.executeQuery();
         }catch (SQLException e) {
@@ -48,7 +48,7 @@ public class DBConnFactory {
         }
         return rs;
     }
-    public static void executeUpdate() {
+    static void executeUpdate() {
         int rowCount;
         try {
             rowCount=stmt.executeUpdate();

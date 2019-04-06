@@ -51,15 +51,25 @@ public class TestKafkaConsumer extends Thread{
                     String jsonStr=record.value();
                     JSONObject jsonObject=JSONObject.parseObject(jsonStr);
                     String mask=jsonObject.getString("mask");
-                    if("process".equals(mask)){
-                        String task_code=jsonObject.getString("task_code");
-                        int process=jsonObject.getInteger("process");
-                        String target_person_url=jsonObject.getString("target_person_url");
-                        DBManager.updateProcess(task_code,process);
-                        DBManager.queryDataAndSent2Ui();
-                    }else if("data".equals(mask)){
-
+                    switch (mask){
+                        case "process":
+                            String task_code=jsonObject.getString("task_code");
+                            int process=jsonObject.getInteger("process");
+                            String target_person_url=jsonObject.getString("target_person_url");
+                            DBManager.updateProcess(task_code,process);
+                            DBManager.queryProcessDataAndSent2Ui();
+                            break;
+                        case "data":
+                            break;
+                        case "server_status":
+                            String server=jsonObject.getString("server");
+                            int serverIndex=jsonObject.getInteger("server_index");
+                            String status=jsonObject.getString("status");
+                            DBManager.updateServerStatus(status,serverIndex,server);
+                            DBManager.findAllServerStatusAndSent2Ui();
+                            break;
                     }
+
 //                    Send message to every client
 //                    for (WebSocket webSocket :wbSockets){
 //                        webSocket.sendMessage(record.value());

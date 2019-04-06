@@ -169,11 +169,14 @@
                 <!-- =========
                 Start task progress tab content section
                 ===================================-->
-
+                <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
+                <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
+                <!--/*@thymesVar id="serverStatusList" type="java.util.List"*/-->
+                <!--/*@thymesVar id="serverStatus" type="com.example.springbootsql.entity.ServerStatus"*/-->
                 <div id='resume' class="tab-pane fade">
+
                     <div class="body-content">
-                        <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
-                        <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
+
                         <div class="box-block">
                             <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" id="add_progress_bar">
                                 <li>
@@ -214,118 +217,23 @@
                 <!-- =========
                 Start portfolio tab content section
                 ===================================-->
+
                 <div id='portfolio' class="tab-pane fade">
                   <div class="body-content">
-                    <h3 class="title with-icon"><span class="fa fa-briefcase icn-title"></span> My Works</h3>
 
-                    <!-- =========
-                    Start list control postfolio section
-                    ===================================-->
-                    <div class="text-center">
-                      <ul class="control-profolio list-inline">
-                        <li class="filter active" data-filter="all">All</li>
-                        <li class="filter" data-filter="webdesign">Web Design</li>
-                        <li class="filter" data-filter="websiteapp">WebsiteApp</li>
-                        <li class="filter" data-filter="mobileapp">MobileApp</li>
-                      </ul>
-                    </div>
-                    <!-- =========
-                    End list control postfolio section
-                    ===================================-->
+                    <table id="server_status_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
+                      <tr style="color:red">
+                        <th>Server</th>
+                        <th>ServerIndex</th>
+                        <th>Status</th>
+                      </tr>
 
-                    <!-- =========
-                    Start grid postfolio section
-                    ===================================-->
-                    <ul id='portfolio-grid' class="list-unstyled grid-portfolio">
-                      <li class="mix webdesign">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix websiteapp">
-                        <div class="item-portfolio">
-                          <a href="http://www.youtube.com/watch?v=0O2aH4XLbto" class="preview-portfolio imgWrapper popup-iframe">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-youtube "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix webdesign">
-                        <div class="item-portfolio">
-                          <a href="https://vimeo.com/45830194" class="preview-portfolio imgWrapper popup-iframe">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-vimeo-square "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix websiteapp">
-                        <div class="item-portfolio">
-                          <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&amp;hl=en&amp;t=v&amp;hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="preview-portfolio imgWrapper popup-iframe">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-map-marker "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix mobileapp">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-
-                      </li>
-                      <li class="mix webdesign">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix webdesign">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix mobileapp">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png" class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-link "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                      <li class="mix websiteapp">
-                        <div class="item-portfolio">
-                          <a href="../assets/images/portfolio/big/portfolio-big.png " class="preview-portfolio imgWrapper image-popup">
-                            <div class="mask"><div class="icn-center"><i class="fa fa-picture-o "></i></div></div>
-                            <img src="../assets/images/portfolio/portfolio.png" alt="" class="img-responsive"/>
-                          </a>
-                          <div class="desc-portfolio"><h5>PERSONAL  PROJECT <small>a Web Design</small></h5></div>
-                        </div>
-                      </li>
-                    </ul>
-                    <!-- =========
-                    End grid postfolio section
-                    ===================================-->
-
-
+                      <tr th:each="serverStatus : ${serverStatusList}">
+                        <td th:text="${serverStatus.server}"></td>
+                        <td th:text="${serverStatus.server_index}"></td>
+                        <td th:text="${serverStatus.status}"></td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
                 <!-- =========
@@ -591,6 +499,39 @@
       //接收到消息的回调方法
       websocket.onmessage = function (event) {
           setMessageInnerHTML(event.data);
+          // var jsonStr='{"ui_mask":"serverStatus","server_status_list":[{"server":"xxx","server_index":1,"status":"stopped"},{"server":"xxx","server_index":0,"status":"stopped"}]}';
+          var jsonObject=JSON.parse(event.data);
+          var ui_mask=jsonObject.ui_mask;
+          switch (ui_mask) {
+              case "serverStatus":
+                  var jsonArray=jsonObject.server_status_list;
+                  var table=document.getElementById('server_status_table');
+                  var trs=table.getElementsByTagName('tr');
+                  for(var j=trs.length-1;j>1;j--){
+                      table.deleteRow(j);
+                  }
+                  for(var k=0;k<jsonArray.length;k++){
+                      var oTr=document.createElement('tr');
+                      for(var m=0;m<3;m++){
+                        var oTd=document.createElement('td');
+                        oTr.appendChild(oTd);
+                      }
+                      table.appendChild(oTr);
+                  }
+
+                  for(var i=0;i<jsonArray.length;i++){
+                    var col=table.rows[i+1].cells;
+                    var subJsonObj=jsonArray[i];
+                    var server=subJsonObj.server;
+                    var server_index=subJsonObj.server_index;
+                    var status=subJsonObj.status;
+                    col[0].innerHTML =server;
+                    col[1].innerHTML =server_index;
+                    col[2].innerHTML=status;
+                    console.log(server+" "+server_index+" "+status);
+                  }
+                  break;
+          }
       };
 
       //连接关闭的回调方法

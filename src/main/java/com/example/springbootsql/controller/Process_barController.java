@@ -17,7 +17,7 @@ import java.util.List;
 public class Process_barController {
     @Autowired
     public TaskMessageRepository taskMessageRepository;
-    @GetMapping("/login")
+    @GetMapping("/testsssss")
     public String login(Model model){
         Thread queryData=new Thread(() -> {
             while (Test.run){

@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.springbootsql.component.DataWebSocketClient;
 import com.example.springbootsql.component.TestKafkaConsumer;
+import com.example.springbootsql.entity.ServerStatus;
 import com.example.springbootsql.entity.TestPartFresh;
 import com.example.springbootsql.entity.TaskMessage;
 import com.example.springbootsql.entity.User;
+import com.example.springbootsql.repository.ServerStatusRepository;
 import com.example.springbootsql.repository.TaskMessageRepository;
 import com.example.springbootsql.repository.UserRepository;
 import com.example.springbootsql.test.Test;
@@ -37,6 +39,8 @@ public class BodyController {
     public UserRepository userRepository;
     @Autowired
     public TaskMessageRepository taskMessageRepository;
+    @Autowired
+    public ServerStatusRepository serverStatusRepository;
 
 //    @Autowired
 //    public BodyController(UserRepository userRepository,TaskMessageRepository taskMessageRepository) {
@@ -87,6 +91,8 @@ public class BodyController {
         model.addAttribute("user", new User());
         System.out.println("in loginPage");
         Test.run=true;
+
+
         TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
         if(!TestKafkaConsumer.isRunning){
             consumerKafka.start();
@@ -184,6 +190,9 @@ public class BodyController {
 
                 Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
                 model.addAttribute("taskFromData", tasks);
+
+                Iterable<ServerStatus> serverStatusList=serverStatusRepository.findAll();
+                model.addAttribute("serverStatusList",serverStatusList);
 
                 System.out.println(newUser.getCity());
                 System.out.println(newUser.getEmail());

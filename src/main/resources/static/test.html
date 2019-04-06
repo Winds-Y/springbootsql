@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        var jsonStr='{"ui_mask":"serverStatus","server_status_list":[{"server":"182.61.39.155","server_index":1,"status":"stopped"},{"server":"106.12.20.252","server_index":0,"status":"stopped"}]}';
+        var jsonObject=JSON.parse(jsonStr);
+        var ui_mask=jsonObject.ui_mask;
+        switch (ui_mask) {
+            case "serverStatus":
+                var jsonArray=jsonObject.server_status_list;
+                for(var i=0;i<jsonArray.length;i++){
+                    var subJsonObj=jsonArray[i];
+                    var server=subJsonObj.server;
+                    var server_index=subJsonObj.server_index;
+                    var status=subJsonObj.status;
+                    console.log(server+" "+server_index+" "+status);
+                }
+                break;
+        }
+    </script>
+</body>
+</html>
