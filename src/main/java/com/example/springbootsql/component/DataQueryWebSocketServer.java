@@ -23,8 +23,8 @@ public class DataQueryWebSocketServer {
     private static CopyOnWriteArrayList<DataQueryWebSocketServer> webSocketSet= new CopyOnWriteArrayList<>();
     private Session session;
 
-    @Autowired
-    private  TaskMessageRepository taskMessageRepository;
+//    @Autowired
+//    private  TaskMessageRepository taskMessageRepository;
 //    private QueryDataThread queryDataThread;
 //
 

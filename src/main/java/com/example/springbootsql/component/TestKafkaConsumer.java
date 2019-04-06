@@ -1,6 +1,7 @@
 package com.example.springbootsql.component;
 
-import com.example.springbootsql.test.Test;
+import com.alibaba.fastjson.JSONObject;
+import com.example.springbootsql.utils.DBManager;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -13,10 +14,10 @@ import java.util.Properties;
 @Component
 public class TestKafkaConsumer extends Thread{
     private static KafkaConsumer<String,String> consumer;
-    private String topic = "cuc_receive_target_url";
-    private static boolean run=true;
+    private String topic = "cuc_master2_client";
+    public static boolean isRunning =false;
     public static void stopIt(){
-        run=false;
+        isRunning =false;
     }
     public TestKafkaConsumer(){
 
@@ -26,24 +27,39 @@ public class TestKafkaConsumer extends Thread{
     public void run(){
         Properties props = new Properties();
         props.put("bootstrap.servers", "154.8.139.155:9092");
-        props.put("group.id", "test1");
+        props.put("group.id", "cuc_master2_client_1");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("session.timeout.ms", "30000");
         props.put("auto.offset.reset","earliest");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        //创建消费者对象
         consumer = new KafkaConsumer<String,String>(props);
         consumer.subscribe(Arrays.asList(this.topic));
-        //死循环，持续消费kafka
+//        User user=userRepository.findByName("changze");
+//        if(user!=null){
+//            System.out.println(user.getAge());
+//        }
         while (true){
+            isRunning=true;
             try {
                 //消费数据，并设置超时时间
                 ConsumerRecords<String, String> records = consumer.poll(100);
                 //Consumer message
                 for (ConsumerRecord<String, String> record : records) {
-                    System.out.println(record.value());
+                    System.out.println("From Kafka cuc_master2_client："+record.value());
+                    String jsonStr=record.value();
+                    JSONObject jsonObject=JSONObject.parseObject(jsonStr);
+                    String mask=jsonObject.getString("mask");
+                    if("process".equals(mask)){
+                        String task_code=jsonObject.getString("task_code");
+                        int process=jsonObject.getInteger("process");
+                        String target_person_url=jsonObject.getString("target_person_url");
+                        DBManager.updateProcess(task_code,process);
+                        DBManager.queryDataAndSent2Ui();
+                    }else if("data".equals(mask)){
+
+                    }
 //                    Send message to every client
 //                    for (WebSocket webSocket :wbSockets){
 //                        webSocket.sendMessage(record.value());

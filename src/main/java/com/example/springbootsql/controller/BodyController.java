@@ -33,14 +33,16 @@ import java.util.List;
 
 @Controller
 public class BodyController {
-    private final UserRepository userRepository;
-    private final TaskMessageRepository taskMessageRepository;
-
     @Autowired
-    public BodyController(UserRepository userRepository,TaskMessageRepository taskMessageRepository) {
-        this.userRepository = userRepository;
-        this.taskMessageRepository=taskMessageRepository;
-    }
+    public UserRepository userRepository;
+    @Autowired
+    public TaskMessageRepository taskMessageRepository;
+
+//    @Autowired
+//    public BodyController(UserRepository userRepository,TaskMessageRepository taskMessageRepository) {
+//        this.userRepository = userRepository;
+//        this.taskMessageRepository=taskMessageRepository;
+//    }
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
@@ -84,6 +86,22 @@ public class BodyController {
     public String loginPage(Model model){
         model.addAttribute("user", new User());
         System.out.println("in loginPage");
+        Test.run=true;
+        TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
+        if(!TestKafkaConsumer.isRunning){
+            consumerKafka.start();
+        }
+        Thread watch=new Thread(() -> {
+            while(true){
+                if(!Test.run){
+                    consumerKafka.stop();
+                    System.out.println("Kafka consumer stop......................");
+                    Test.run=true;
+//                            queryData.stop();
+                }
+            }
+        });
+        watch.start();
         return "login";
     }
 
@@ -111,7 +129,7 @@ public class BodyController {
                 TaskMessage taskMessage=new TaskMessage();
                 model.addAttribute("taskMessage",taskMessage);
                 System.out.println("in loginResult:登陆成功");
-                System.out.println("启动kafka");
+
 //                Thread startKafkaThread=new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
@@ -119,43 +137,50 @@ public class BodyController {
 //                    }
 //                });
 //                startKafkaThread.start();
-                TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
-                consumerKafka.start();
-
-                Test.run=true;
-
-                Thread queryData=new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (Test.run){
-                            Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
-                            List<TaskMessage>taskList= Lists.newArrayList(tasks);
-                            String jsonStr=JSON.toJSONString(taskList);
-                            System.out.println("queryData----: "+jsonStr);
-                            DataWebSocketClient.session.getAsyncRemote().sendText(jsonStr);
-                            try {
-                                Thread.sleep(1000*60);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-                queryData.start();
 
 
-                Thread watch=new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while(true){
-                            if(!Test.run){
-                                consumerKafka.stop();
-                                queryData.stop();
-                            }
-                        }
-                    }
-                });
-                watch.start();
+
+//                Thread queryData=new Thread(() -> {
+//                    while (Test.run){
+//                        Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
+//                        List<TaskMessage>taskList= Lists.newArrayList(tasks);
+//                        String jsonStr=JSON.toJSONString(taskList);
+//                        System.out.println("queryData----: "+jsonStr);
+//                        DataWebSocketClient.session.getAsyncRemote().sendText(jsonStr);
+//                        try {
+//                            Thread.sleep(1000*60);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                queryData.start();
+
+//                Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
+//                List<TaskMessage>taskList= Lists.newArrayList(tasks);
+//                String jsonStr=JSON.toJSONString(taskList);
+//                System.out.println("queryData----: "+jsonStr);
+//
+//                Thread sendDataThread=new Thread(() -> {
+//                    for(int i=0;i<10;i++){
+//                        DataWebSocketClient.session.getAsyncRemote().sendText(jsonStr);
+//                        try {
+//                            Thread.sleep(500);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                sendDataThread.start();
+//                try {
+//
+//                    DataWebSocketClient.session.getBasicRemote().sendText(jsonStr);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+
+
 
                 Iterable<TaskMessage> tasks = taskMessageRepository.findAll();
                 model.addAttribute("taskFromData", tasks);

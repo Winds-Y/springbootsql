@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="box-block">
+    <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" id="add_progress_bar">
+        <li>
+            <span class="caption-skill" th:text="${taskmessage.targetPersonUrl}">Ruby On Rails</span>
+            <div class="progress">
+                <div class="progress-bar" th:style="'width:'+${taskmessage.progress}+'%'">
+                    <span th:text="${taskmessage.progress}+'%'"></span>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+</div>
+</body>
+<script>
+    var dataQueryWebSocket=null;
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        dataQueryWebSocket=new WebSocket('ws://localhost:8080/freshDatabase');
+    }
+    else {
+        console.log('当前浏览器 Not support websocket')
+    }
+    dataQueryWebSocket.onerror = function () {
+        console.log("dataQueryWebSocket连接发生错误");
+    };
+
+    //连接成功建立的回调方法
+    dataQueryWebSocket.onopen = function () {
+        console.log("dataQueryWebSocket连接成功");
+    };
+
+    //接收到消息的回调方法
+    dataQueryWebSocket.onmessage = function (event) {
+        console.log(event.data);
+        refreshData(event.data)
+    };
+    function refreshData(jsonStr){
+        var jsonArray=$.parseJSON(jsonStr);
+        var data_len=jsonArray.length;
+        var table=document.getElementById('process_table');
+        console.log('data length: '+data_len);
+        var trs=table.getElementsByTagName('tr');
+        for(var j=trs.length-1;j>1;j--){
+            table.deleteRow(j);
+        }
+        $("#add_progress_bar li").remove();
+
+        for(var k=0;k<data_len;k++){
+            var oTr=document.createElement('tr');
+            for(var m=0;m<4;m++){
+                var oTd=document.createElement('td');
+                oTr.appendChild(oTd);
+            }
+            table.appendChild(oTr);
+        }
+
+        console.log("table length"+table.rows.length);
+        for(var i=0;i<data_len;i++){
+            var col=table.rows[i+1].cells;
+            var jsonObject=jsonArray[i];
+            col[0].innerHTML =jsonObject.time;
+            col[1].innerHTML =jsonObject.task_code;
+            col[2].innerHTML=jsonObject.target_person_url;
+            col[3].innerHTML=jsonObject.task_progress;
+            console.log(jsonObject.task_progress);
+            var task_progress=jsonObject.task_progress+'%';
+            var task_code=jsonObject.task_code;
+            var txt='<li><span class="caption-skill">'+task_code+'</span><div class="progress"><div class="progress-bar" style="width: '+task_progress+';"><span>'+task_progress+'</span></div></div></li>';
+            $('#add_progress_bar').append(txt);
+        }
+    }
+</script>
+</html>

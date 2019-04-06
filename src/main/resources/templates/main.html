@@ -172,15 +172,23 @@
 
                 <div id='resume' class="tab-pane fade">
                     <div class="body-content">
+                        <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
+                        <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
                         <div class="box-block">
-                            <ul class="list-unstyled list-skills" id="add_progress_bar">
-
+                            <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" id="add_progress_bar">
+                                <li>
+                                    <span class="caption-skill" th:text="${taskmessage.targetPersonUrl}">Ruby On Rails</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" th:style="'width:'+${taskmessage.progress}+'%'">
+                                            <span th:text="${taskmessage.progress}+'%'"></span>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
 
 
                         </div>
-                        <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
-                        <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
+
                         <table id="process_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
                             <tr style="color:red">
                                 <th>TIME</th>
@@ -634,7 +642,7 @@
               var jsonObject=jsonArray[i];
               col[0].innerHTML =jsonObject.time;
               col[1].innerHTML =jsonObject.task_code;
-              col[2].innerHTML=jsonObject.task_name;
+              col[2].innerHTML=jsonObject.target_person_url;
               col[3].innerHTML=jsonObject.task_progress;
               console.log(jsonObject.task_progress);
               var task_progress=jsonObject.task_progress+'%';
