@@ -27,7 +27,7 @@
     <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">
     <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <script type="text/javascript" th:src="@{../bootstrap/js/jquery.min.js}"></script>
-
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   </head>
   <!--210: send task-->
   <body>
@@ -109,8 +109,8 @@
               ===================================-->
               <nav id='navigation'>
                 <ul class="navigation-list clearfix list-unstyled">
-                  <li class="active"><a href="#about" data-toggle="tab" data-menu="about"><i class="icon-pencil"></i> <span>send task</span></a></li>
-                  <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Task progress</span></a></li>
+                  <li class="active"><a href="#about" data-toggle="tab" data-menu="about"><i class="icon-pencil"></i> <span>Send Task</span></a></li>
+                  <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Task Progress</span></a></li>
                   <li><a href="#portfolio" data-toggle="tab" data-menu="portfolio"><i class="icon-folder-open"></i> <span>Portfolio</span></a></li>
                   <li><a href="#blog" data-toggle="tab" data-menu="blog"><i class="icon-pencil"></i> <span >Blog</span></a></li>
                   <li><a href="#contact" data-toggle="tab" data-menu="contact"><i class="icon-mail"></i> <span>Contact</span></a></li>
@@ -246,76 +246,7 @@
                 ===================================-->
                 <div id='blog' class="tab-pane fade">
                   <div class="body-content">
-                    <h2 class="title with-icon"><span class="fa  fa-comment-o icn-title"></span> Share Everything With Love</h2>
-
-                    <div class="row">
-                      <div class="col-md-10 col-md-offset-1">
-
-                        <!-- =========
-                        STart blog post section
-                        ===================================-->
-                        <div class="blog-posts">
-                          <div class="blog-post">
-                            <div class="row">
-                              <div class="col-md-8">
-                                <h3 class="title-post"><a href="blog_single.html"><i class="fa fa-picture-o"></i> An Example Post With An Image</a></h3>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="blog-date">
-                                  3 Mar, 2014
-                                </div>
-                              </div>
-                            </div>
-                            <div class="body-post">
-                              <div class="imgWrapper">
-                                <img src="../assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
-                              </div>
-                              <p>Designer focuses on writing clean. by <strong>UnKown</strong></p>
-                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                              <p>
-                                <a href="blog_single.html" class="btn btn-flat style2">Continue Reading...</a>
-                              </p>
-                              <div class="love-post-btn">
-                                <a href="#"><span><i class="fa fa-heart"></i> 3</span></a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="blog-post">
-                            <div class="row">
-                              <div class="col-md-8">
-                                <h3 class="title-post"><a href="blog_single.html"><i class="fa fa-video-camera"></i> An Example Post With A Video</a></h3>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="blog-date">
-                                  3 Mar, 2014
-                                </div>
-                              </div>
-                            </div>
-                            <div class="body-post">
-                              <div class="imgWrapper">
-                                <img src="../assets/images/blog/blog.png" class="img-full blog-img" alt=""/>
-                                <div class="playbtn">
-                                  <a href="https://vimeo.com/45830194" class="popup-iframe"><span class="fa-4x fa fa-play"></span></a>
-                                </div>
-                              </div>
-                              <p>Designer focuses on writing clean. by <strong>UnKown</strong></p>
-                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                              <p>
-                                <a href="blog_single.html" class="btn btn-flat style2">Continue Reading...</a>
-                              </p>
-                              <div class="love-post-btn">
-                                <a href="#"><span><i class="fa fa-heart"></i> 10</span></a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- =========
-                        End blog post section
-                        ===================================-->
-
-                        <a href="blog_list.html" class="btn btn-flat btn-lg btn-block">View All Post</a>
-                      </div>
-                    </div>
+                    <svg></svg>
                   </div>
                 </div>
                 <!-- =========
@@ -531,6 +462,30 @@
                     console.log(server+" "+server_index+" "+status);
                   }
                   break;
+            case "bubble":
+                  var name=jsonObject.name;
+                  var facebookUrl=jsonObject.facebookUrl;
+                  var relationship=jsonObject.relationship;
+                  var favorite_quotes=jsonObject.favorite_quotes;
+                  var introduction=jsonObject.introduction;
+                  var gender=jsonObject.gender;
+                  var language=jsonObject.language;
+                  var interest_in=jsonObject.interest_in;
+                  var religious_views=jsonObject.religious_views;
+                  var political_views=jsonObject.political_views;
+                  var birth_day=jsonObject.birth_day;
+                  var professional_skills=jsonObject.professional_skills;
+                  console.log(name,facebookUrl,relationship,favorite_quotes,introduction,gender,language);
+                  var nodes = [ { name: "桂林" }, { name: "广州" },
+                    { name: "厦门" }, { name: "杭州" },
+                    { name: "上海" }, { name: "青岛" },
+                    { name: "天津" } ,{name:"信阳"}];
+
+                  var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
+                    { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
+                    { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
+                  drawBubble(nodes,edges);
+                  break;
           }
       };
 
@@ -652,7 +607,7 @@
           $('#name').val("");
           $('#url').val("");
           var xxx1='XXX1';
-          var num='90%';
+          var num='0%';
           var txt='<li><span class="caption-skill">'+xxx1+'</span><div class="progress"><div class="progress-bar" style="width: '+num+';"><span>'+num+'</span></div></div></li>';
 
           $('#add_progress_bar').append(txt);
@@ -687,6 +642,95 @@
           }
 
           return uuid.join('');
+      }
+      function drawBubble(nodes,edges) {
+        var width=500;
+        var height= 500;
+        var svg = d3.select("svg");
+        svg.attr("x",300)
+                .attr("y",300)
+                .attr("width",1000)
+                .attr("height",1000);
+
+        // var nodes = [ { name: "桂林" }, { name: "广州" },
+        //   { name: "厦门" }, { name: "杭州" },
+        //   { name: "上海" }, { name: "青岛" },
+        //   { name: "天津" } ,{name:"信阳"}];
+        //
+        // var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
+        //   { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
+        //   { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
+        /*初始化force*/
+        var force = d3.layout.force()
+                .nodes(nodes)
+                .links(edges)
+                .size([300,300])     //作用力的中心区域
+                .linkDistance(100)   //连线的长度
+                .charge([-100]);     //负数为排斥 正数为吸引
+        /*很关键 启动force*/
+        force.start();
+        /*添加连线*/
+        var svg_edges = svg.selectAll("line")
+                .data(edges)
+                .enter()
+                .append("line")
+                .attr("dx",function(d,i){
+                  return i*20;
+                })
+                .attr("dy",function(d,i){
+                  return i*30;
+                })
+                .style("stroke","#ccc")  //线条的颜色
+                .style("stroke-width",1);//线条的宽度
+        /*颜色*/
+        var color = d3.scale.category20();
+        /*添加节点*/
+        var svg_nodes = svg.selectAll("circle")
+                .data(nodes)
+                .enter()
+                .append("circle")
+                .attr("cx",function(d,i){
+                  return i*20;
+                })
+                .attr("cy",function(d,i){
+                  return i*30;
+                })
+                .attr("r",20)
+                .style("fill",function(d,i){
+                  return color(i);
+                })
+                .call(force.drag);
+        //调用drag函数使节点能被拖动
+        /*添加描述节点的文字*/
+        var svg_texts = svg.selectAll("text")
+                .data(nodes)
+                .enter()
+                .append("text")
+                .attr("class","good")
+                .style("fill","black")
+                .attr("dx",-10)               //文字相对node中心的移动
+                .attr("dy",10)
+                .text(function(d,i){         //返回节点的名字
+                  return d.name;
+                })
+                .style("fill","white");
+
+
+        force.on("tick", function(){
+          //更新连线坐标
+          svg_edges.attr("x1",function(d){ return d.source.x; })
+                  .attr("y1",function(d){ return d.source.y; })
+                  .attr("x2",function(d){ return d.target.x; })
+                  .attr("y2",function(d){ return d.target.y; });
+
+          //更新节点坐标
+          svg_nodes.attr("cx",function(d){ return d.x; })
+                  .attr("cy",function(d){ return d.y; });
+
+          //更新文字坐标
+          svg_texts.attr("x", function(d){ return d.x; })
+                  .attr("y", function(d){ return d.y; });
+        });
       }
   </script>
 </html>

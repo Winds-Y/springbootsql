@@ -1,27 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
     <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawSeriesChart);
+        function drawSeriesChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['ID', 'Life Expectancy', 'Fertility Rate', 'Region',     'Population'],
+                ['CAN',    80.66,              1.67,      'North America',  33739900],
+                ['DEU',    79.84,              1.36,      'Europe',         81902307],
+                ['DNK',    78.6,               1.84,      'Europe',         5523095],
+                ['EGY',    72.73,              2.78,      'Middle East',    79716203],
+                ['GBR',    80.05,              2,         'Europe',         61801570],
+                ['IRN',    72.49,              1.7,       'Middle East',    73137148],
+                ['IRQ',    68.09,              4.77,      'Middle East',    31090763],
+                ['ISR',    81.55,              2.96,      'Middle East',    7485600],
+                ['RUS',    68.6,               1.54,      'Europe',         141850000],
+                ['USA',    78.09,              2.05,      'North America',  307007000]
+            ]);
+
+            var options = {
+                title: 'Correlation between life expectancy, fertility rate ' +
+                    'and population of some world countries (2010)',
+                hAxis: {title: 'Life Expectancy'},
+                vAxis: {title: 'Fertility Rate'},
+                bubble: {textStyle: {fontSize: 11}}
+            };
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+            chart.draw(data, options);
+        }
+        function initCircle(data){
+            d3.select("svg").selectAll("g").remove();//清空作图区域
+            var svg = d3.select("svg");
+            var width = +svg.attr("width");
+            var height = +svg.attr("height");
+            var format = d3.format(",d"); //
+            // var color = d3.scaleOrdinal(d3.schemeCategory20c);
+            var color = ["#CCFF00","#FF0033","#336699","#33FF66","#669966","#66CCFF","#99CCFF","#CCCCCC"];//自定义颜色
+            var pack = d3.pack().size([width, height]).padding(1.5);
+            var num,pid;
+            var root = d3.hierarchy({children: data}).sum(function(d) { return d.count; })
+                .each(function(d) {
+                    if(d.parent == null) {num = d.value}
+                    if (id === d.data.name) {
+                        var id;
+                        d.id = id;
+                        d.class = id;
+                        pid = num/(d.value);
+                        d.colorPick = pid>100?5:(pid>50?4:(pid>10?3:(pid>2?2:1)));
+                        console.log(d.colorPick);
+                    }
+                });
+            var node = svg.selectAll(".node") .data(pack(root).leaves())
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+            node.append("circle") .
+            attr("id", function(d) { return d.id; })
+                .attr("r", function(d) { return d.r; })
+                .style("fill", function(d) { return color[d.colorPick]; });
+            node.append("clipPath")
+                .attr("id", function(d) { return "clip-" + d.id; })
+                .append("use")
+                .attr("xlink:href", function(d) { return "#" + d.id; });
+            node.append("text")
+                .attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
+                .selectAll("tspan")
+                .data(function(d) { var arr = new Array(); arr.push(d.class); arr.push(d.data.count); return arr; })
+                .enter().append("tspan")
+                .attr("x", 0)
+                .attr("y", function(d, i, nodes) { return 25 + (i - nodes.length / 2 - 0.5) * 20; })
+                .text(function(d) { return d; });
+            node.append("title") .text(function(d) { return d.id + "\n" + format(d.value); });
+            node.on("click",function(d){ clickBubble(d.id); })
+        }
+
+        function test1() {
+            var jsonStr='{"ui_mask":"serverStatus","server_status_list":[{"server":"182.61.39.155","server_index":1,"status":"stopped"},{"server":"106.12.20.252","server_index":0,"status":"stopped"}]}';
+            var jsonObject=JSON.parse(jsonStr);
+            var ui_mask=jsonObject.ui_mask;
+            switch (ui_mask) {
+                case "serverStatus":
+                    var jsonArray=jsonObject.server_status_list;
+                    for(var i=0;i<jsonArray.length;i++){
+                        var subJsonObj=jsonArray[i];
+                        var server=subJsonObj.server;
+                        var server_index=subJsonObj.server_index;
+                        var status=subJsonObj.status;
+                        console.log(server+" "+server_index+" "+status);
+                    }
+                    break;
+            }
+        }
+
+    </script>
 </head>
 <body>
-    <script>
-        var jsonStr='{"ui_mask":"serverStatus","server_status_list":[{"server":"182.61.39.155","server_index":1,"status":"stopped"},{"server":"106.12.20.252","server_index":0,"status":"stopped"}]}';
-        var jsonObject=JSON.parse(jsonStr);
-        var ui_mask=jsonObject.ui_mask;
-        switch (ui_mask) {
-            case "serverStatus":
-                var jsonArray=jsonObject.server_status_list;
-                for(var i=0;i<jsonArray.length;i++){
-                    var subJsonObj=jsonArray[i];
-                    var server=subJsonObj.server;
-                    var server_index=subJsonObj.server_index;
-                    var status=subJsonObj.status;
-                    console.log(server+" "+server_index+" "+status);
-                }
-                break;
-        }
-    </script>
+<div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+
 </body>
 </html>

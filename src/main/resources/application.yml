@@ -22,6 +22,7 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       batch-size: 65536
         # 缓存容量
-      buffer-memory: 524288
+      buffer-memory: 5242882
         # 服务器地址
       bootstrap-servers: 154.8.139.155:9092
+

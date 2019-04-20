@@ -1,6 +1,9 @@
 package com.example.springbootsql.component;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.springbootsql.entity.FbUser;
 import com.example.springbootsql.utils.DBManager;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -60,6 +63,46 @@ public class TestKafkaConsumer extends Thread{
                             DBManager.queryProcessDataAndSent2Ui();
                             break;
                         case "data":
+                            int currentNum=jsonObject.getInteger("current_num");
+                            int totalNum=jsonObject.getInteger("total_num");
+                            JSONArray jsonArray=jsonObject.getJSONArray("data");
+                            if(jsonArray.size()!=0){
+                                JSONObject data=jsonArray.getJSONObject(0);
+                                JSONArray user=data.getJSONArray("user");
+                                if (user.size() != 0) {
+                                    JSONObject oneUser=user.getJSONObject(0);
+                                    String name=oneUser.getString("name");
+                                    String facebookUrl=oneUser.getString("facebook_url");
+                                    String relationship=oneUser.getString("relationship");
+                                    String favorite_quotes=oneUser.getString("favorite_quotes");
+                                    String introduction=oneUser.getString("introduction");
+                                    String gender=oneUser.getString("gender");
+                                    String language=oneUser.getString("language");
+                                    String interest_in=oneUser.getString("interest_in");
+                                    String religious_views=oneUser.getString("religious_views");
+                                    String political_views=oneUser.getString("political_views");
+                                    String birth_day=oneUser.getString("birth_day");
+                                    String professional_skills=oneUser.getString("professional_skills");
+
+                                    FbUser fbUser=new FbUser();
+                                    fbUser.setUi_mask("bubble");
+                                    fbUser.setName(name);
+                                    fbUser.setFacebookUrl(facebookUrl);
+                                    fbUser.setRelationship(relationship);
+                                    fbUser.setFavorite_quotes(favorite_quotes);
+                                    fbUser.setIntroduction(introduction);
+                                    fbUser.setGender(gender);
+                                    fbUser.setLanguage(language);
+                                    fbUser.setInterest_in(interest_in);
+                                    fbUser.setReligious_views(religious_views);
+                                    fbUser.setPolitical_views(political_views);
+                                    fbUser.setBirth_day(birth_day);
+                                    fbUser.setProfessional_skills(professional_skills);
+                                    String fbUserJsonStr= JSON.toJSONString(fbUser);
+                                    SyWebSocketClient.session.getAsyncRemote().sendText(fbUserJsonStr);
+                                }
+                            }
+
                             break;
                         case "server_status":
                             String server=jsonObject.getString("server");

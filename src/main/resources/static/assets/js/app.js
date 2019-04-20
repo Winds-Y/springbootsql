@@ -72,7 +72,7 @@ function init_btn_open_content() {
         scrollTop: $('#wrapper').offset().top
       }, 600, function() {
         $('.img-arrow, #main-content').fadeOut();
-        $('#open-content').text('About Me');
+        $('#open-content').text("Let's start!");
       });
     }
   });

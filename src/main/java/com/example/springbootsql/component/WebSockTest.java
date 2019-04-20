@@ -36,6 +36,7 @@ public class WebSockTest {
     public void onMessage(String message, Session session){
         if(message.equals("kafkastop")){
             Test.run=false;
+            Test.startThread=false;
         }
         System.out.println("来自客户端的消息："+message);
 //        群发消息

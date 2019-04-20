@@ -90,13 +90,29 @@ public class BodyController {
     public String loginPage(Model model){
         model.addAttribute("user", new User());
         System.out.println("in loginPage");
-        Test.run=true;
+
+//        ServerStatus serverStatus=new ServerStatus();
+//        serverStatus.setServer("");
+//        serverStatus.setServer_index(0);
+//        serverStatus.setStatus("stopped");
+//        serverStatusRepository.save(serverStatus);
+//
+//        ServerStatus serverStatus1=new ServerStatus();
+//        serverStatus1.setServer("");
+//        serverStatus1.setServer_index(0);
+//        serverStatus1.setStatus("stopped");
+//        serverStatusRepository.save(serverStatus1);
 
 
         TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
-        if(!TestKafkaConsumer.isRunning){
-            consumerKafka.start();
+        if(!Test.startThread){
+            if(Test.run){
+                System.out.println("Kafka consumer start.................");
+                consumerKafka.start();
+            }
+            Test.startThread=true;
         }
+
         Thread watch=new Thread(() -> {
             while(true){
                 if(!Test.run){
@@ -184,7 +200,6 @@ public class BodyController {
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-
 
 
 
