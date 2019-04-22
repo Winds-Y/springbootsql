@@ -3,14 +3,19 @@ package com.example.springbootsql.component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.example.springbootsql.entity.FbUser;
+import com.example.springbootsql.entity.Friends;
+import com.example.springbootsql.entity.JsonFriends;
 import com.example.springbootsql.utils.DBManager;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -65,12 +70,13 @@ public class TestKafkaConsumer extends Thread{
                         case "data":
                             int currentNum=jsonObject.getInteger("current_num");
                             int totalNum=jsonObject.getInteger("total_num");
-                            JSONArray jsonArray=jsonObject.getJSONArray("data");
-                            if(jsonArray.size()!=0){
-                                JSONObject data=jsonArray.getJSONObject(0);
-                                JSONArray user=data.getJSONArray("user");
-                                if (user.size() != 0) {
-                                    JSONObject oneUser=user.getJSONObject(0);
+                            JSONArray dataArray=jsonObject.getJSONArray("data");
+                            if(dataArray.size()!=0){
+                                FbUser fbUser=new FbUser();
+                                JSONObject data=dataArray.getJSONObject(0);
+                                JSONArray users=data.getJSONArray("user");
+                                if (users.size() != 0) {
+                                    JSONObject oneUser=users.getJSONObject(0);
                                     String name=oneUser.getString("name");
                                     String facebookUrl=oneUser.getString("facebook_url");
                                     String relationship=oneUser.getString("relationship");
@@ -84,7 +90,6 @@ public class TestKafkaConsumer extends Thread{
                                     String birth_day=oneUser.getString("birth_day");
                                     String professional_skills=oneUser.getString("professional_skills");
 
-                                    FbUser fbUser=new FbUser();
                                     fbUser.setUi_mask("bubble");
                                     fbUser.setName(name);
                                     fbUser.setFacebookUrl(facebookUrl);
@@ -98,10 +103,49 @@ public class TestKafkaConsumer extends Thread{
                                     fbUser.setPolitical_views(political_views);
                                     fbUser.setBirth_day(birth_day);
                                     fbUser.setProfessional_skills(professional_skills);
+
+                                    JSONArray friendshipArray=data.getJSONArray("friendship");
+                                    List<String> friendNameList=new ArrayList<>();
+                                    for(int i=0;i<friendshipArray.size();i++){
+                                        JSONObject friendship=friendshipArray.getJSONObject(i);
+                                        String friendName=friendship.getString("friend_name");
+                                        friendNameList.add(friendName);
+                                    }
+                                    fbUser.setFriendsList(friendNameList);
                                     String fbUserJsonStr= JSON.toJSONString(fbUser);
                                     SyWebSocketClient.session.getAsyncRemote().sendText(fbUserJsonStr);
+
                                 }
+
+
+                                JSONArray friendsArray=data.getJSONArray("friends");
+                                if(friendsArray.size()!=0){
+                                    List<Friends> friendsList=new ArrayList<>();
+                                    for(int i=0;i<friendsArray.size();i++){
+                                        JSONObject friends=friendsArray.getJSONObject(i);
+                                        String name=friends.getString("name");
+                                        String facebook_url=friends.getString("facebook_url");
+                                        String gender=friends.getString("gender");
+                                        String birth_day=friends.getString("birth_day");
+                                        String introduction=friends.getString("introduction");
+
+                                        Friends friends1=new Friends();
+                                        friends1.setName(name);
+                                        friends1.setFacebook_url(facebook_url);
+                                        friends1.setGender(gender);
+                                        friends1.setBirth_day(birth_day);
+                                        friends1.setIntroduction(introduction);
+                                        friendsList.add(friends1);
+                                    }
+                                    JsonFriends jsonFriends=new JsonFriends();
+                                    jsonFriends.setUi_mask("friendsData");
+                                    jsonFriends.setFriendsList(friendsList);
+                                    String friendsJsonStr=JSON.toJSONString(jsonFriends);
+                                    SyWebSocketClient.session.getAsyncRemote().sendText(friendsJsonStr);
+                                }
+
                             }
+
 
                             break;
                         case "server_status":

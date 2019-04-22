@@ -24,31 +24,26 @@
     <link rel="shortcut icon" th:href="@{'../assets/images/faicon.png'}" >
     <link rel="apple-touch-icon" sizes="129x129" th:href="@{'../assets/images/icon.png'}">
     
-    <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">
+<!--    <link th:href="@{'../assets/css/yourcss.css'}"  rel="stylesheet">-->
     <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <script type="text/javascript" th:src="@{../bootstrap/js/jquery.min.js}"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!--      <script src="http://d3js.org/d3.v3.min.js"></script>-->
+    <script th:src="@{../js/d3.min.js}"  charset="utf-8"></script>
   </head>
   <!--210: send task-->
   <body>
-    <!-- =========
-    Start Wrapper Page
-    ===================================-->
+
     <div id="wrapper">
       <div class="container" >
         <div class="row">
           <div class="col-lg-10 col-lg-offset-1">
 
-            <!-- =========
-            Start portrait section
-            ===================================-->
+
             <header class="portrait">
               <div class="bg-line"></div>
               <div class="body-portrait">
 
-                <!-- =========
-                Start Note Slider
-                ===================================-->
+
                 <div class="box-note">
                   <div id="slider-note" class="carousel slide" data-ride="carousel" data-interval="10000">
                     <div class="carousel-inner">
@@ -61,79 +56,46 @@
                     </div>
                   </div>
                 </div>
-                <!-- =========
-                End Note Slider
-                ===================================-->
 
-                <!-- =========
-                Start portrait image Section
-                ===================================-->
                 <div class="portrait-img-area">
-                  <img src="../assets/images/avatar.png" alt="avatar" class="avatar"/>
+                  <img src="../assets/images/yangtes.png" alt="avatar" class="avatar"/>
                   <!--<div class="profile-links">-->
                     <!--<a href="" class="facebook"  data-toggle="tooltip" data-placement="left" title="Facebook"><i class="fa fa-facebook"></i></a>-->
                     <!--<a href="" class="twitter"  data-toggle="tooltip" data-placement="right" title="Twitter"><i class="fa fa-twitter"></i></a>-->
                   <!--</div>-->
                 </div>
-                <!-- =========
-                End  portrait image Section
-                ===================================-->
 
-                <!-- =========
-                Start Show Yor Name Section
-                ===================================-->
                   <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
                 <h1 class="name" th:text="${user.name}"><small>freelance web designer</small></h1>
                 <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
                 <a href="javascript:void(0)" class="btn btn-flat " id="open-content">Let's start!</a>
                 <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
-                <!-- =========
-                Start Show Yor Name Section
-                ===================================-->
 
 
               </div>
             </header>
-            <!-- =========
-            End portrait section
-            ===================================-->
 
-
-            <!-- =========
-            Start Content section
-            ===================================-->
             <section class="content" id="main-content">
 
-              <!-- =========
-              Start navigation section
-              ===================================-->
+
               <nav id='navigation'>
                 <ul class="navigation-list clearfix list-unstyled">
                   <li class="active"><a href="#about" data-toggle="tab" data-menu="about"><i class="icon-pencil"></i> <span>Send Task</span></a></li>
                   <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Task Progress</span></a></li>
-                  <li><a href="#portfolio" data-toggle="tab" data-menu="portfolio"><i class="icon-folder-open"></i> <span>Portfolio</span></a></li>
-                  <li><a href="#blog" data-toggle="tab" data-menu="blog"><i class="icon-pencil"></i> <span >Blog</span></a></li>
+                  <li><a href="#portfolio" data-toggle="tab" data-menu="portfolio"><i class="icon-folder-open"></i> <span>ServerStatus</span></a></li>
+                  <li><a href="#blog" data-toggle="tab" data-menu="blog"><i class="icon-pencil"></i> <span >PersonInfo</span></a></li>
                   <li><a href="#contact" data-toggle="tab" data-menu="contact"><i class="icon-mail"></i> <span>Contact</span></a></li>
                 </ul>
               </nav>
-              <!-- =========
-              End navigation section
-              ===================================-->
 
-
-              <!-- =========
-              Start tab content section
-              ===================================-->
               <div class="tab-content">
 
-                <!-- =========
-                Start Send task tab content section
-                ===================================-->
+
                 <div id='about' class="tab-pane  fade in  active">
                     <!--/*@thymesVar id="partial" type="java.lang.String"*/-->
                     <h1 th:text="${partial}"></h1>
                   <div class="body-content">
-
+                      <h2 style="color:green;margin: 10px 350px;text-align:center">任务下达</h2>
                       <!--/*@thymesVar id="taskMessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
                       <div id="part_div" style="top:100px;" class="form-horizontal"  th:fragment="part_div"  >
 
@@ -152,7 +114,7 @@
                           </div>
 
 
-                          <div class="form-group" style="margin: 20px auto">
+                          <div class="form-group" style="margin: 20px auto;width:115px;">
                               <div>
                                   <button class="btn btn-primary" id="btn" onclick="ceshi1()">发送</button>
                                   <input type="reset" class="btn btn-warning" value="重置" />
@@ -161,14 +123,8 @@
                       </div>
                   </div>
                 </div>
-                <!-- =========
-                End Send task  tab content section
-                ===================================-->
 
 
-                <!-- =========
-                Start task progress tab content section
-                ===================================-->
                 <!--/*@thymesVar id="taskFromData" type="java.util.List"*/-->
                 <!--/*@thymesVar id="taskmessage" type="com.example.springbootsql.entity.TaskMessage"*/-->
                 <!--/*@thymesVar id="serverStatusList" type="java.util.List"*/-->
@@ -176,7 +132,7 @@
                 <div id='resume' class="tab-pane fade">
 
                     <div class="body-content">
-
+                        <h2 style="color:green;margin: 10px 350px;text-align:center">采集进度</h2>
                         <div class="box-block">
                             <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" id="add_progress_bar">
                                 <li>
@@ -210,17 +166,11 @@
                     <label id="clock"></label>
 
                 </div>
-                <!-- =========
-                End resume tab content section
-                ===================================-->
 
-                <!-- =========
-                Start portfolio tab content section
-                ===================================-->
 
                 <div id='portfolio' class="tab-pane fade">
                   <div class="body-content">
-
+                      <h2 style="color:green;margin: 10px 350px;text-align:center">采集节点状态</h2>
                     <table id="server_status_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
                       <tr style="color:red">
                         <th>Server</th>
@@ -236,157 +186,68 @@
                     </table>
                   </div>
                 </div>
-                <!-- =========
-                End portfolio tab content section
-                ===================================-->
 
 
-                <!-- =========
-                Start Blog tab content section
-                ===================================-->
                 <div id='blog' class="tab-pane fade">
                   <div class="body-content">
-                    <svg></svg>
+                      <h2 style="color:green;margin: 10px 350px;text-align:center">目标人信息</h2>
+                        <svg></svg>
                   </div>
                 </div>
-                <!-- =========
-                End Blog tab content section
-                ===================================-->
 
 
-                <!-- =========
-                Start Contact tab content section
-                ===================================-->
                 <div id='contact' class="tab-pane fade">
-                  <div class="body-content">
-                    <h3 class="title with-icon"><span class="fa fa-coffee icn-title"></span> Get In Touch</h3>
+                    <div class="body-content">
+                        <h2 style="color:green;margin: 10px 350px;text-align:center">好友信息表</h2>
+                        <table id="friends_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
+                            <tr style="color:red">
+                                <th>Name</th>
+                                <th>FacebookURL</th>
+                                <th>Gender</th>
+                                <th>BirthDay</th>
+                                <th>Introduction</th>
+                            </tr>
 
-                    <!-- =========
-                    Start map section
-                    ===================================-->
-                    <div class="map-area">
-                      <div id="map"></div>
-                      <div class="info-map">
-                        <h3>Contact Info</h3>
-                        <ul class="list-unstyled list-info">
-                          <li><i class="fa fa-home"></i> Haltern am See, Weseler Str. 151</li>
-                          <li><i class="fa fa-phone"></i> +62-867-7887</li>
-                          <li><i class="fa fa-facebook"></i> <a href="#">id.envato</a></li>
-                          <li><i class="fa fa-twitter"></i> <a href="#">id.envato </a></li>
-                          <li><i class="fa fa-linkedin"></i> <a href="#">idea</a></li>
-                        </ul>
-                      </div>
+                        </table>
                     </div>
-                    <div class="deviter"></div>
-                    <br/>
-                    <!-- =========
-                    End map section
-                    ===================================-->
-
-
-                    <!-- =========
-                    Start form contact section
-                    ===================================-->
-                    <form >
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="FullnameForm">Fullname</label>
-                            <input type="text" class="form-control" id="FullnameForm" placeholder="Enter Fullname">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="CompanyForm">Company</label>
-                            <input type="text" class="form-control" id="CompanyForm" placeholder="Enter Company">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="EmailForm">Email Address</label>
-                            <input type="email" class="form-control" id="EmailForm" placeholder="Enter Address">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="PhoneForm">Phone Number</label>
-                            <input type="text" class="form-control" id="PhoneForm" placeholder="Enter Phone NUmber">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="MesageForm">Message</label>
-                        <textarea class="form-control" rows="8" id="MesageForm" placeholder="Enter Message"></textarea>
-                      </div>
-                      <button type="submit" class="btn btn-flat btn-lg"><span class="glyphicon glyphicon-send"></span> Send</button>
-                    </form>
-                    <!-- =========
-                    End form contact section
-                    ===================================-->
-
-                  </div>
                 </div>
 
               </div>
-              <!-- =========
-              End tab content section
-              ===================================-->
+
 
 
               <a id="backtotop" href="#"><i class="fa fa-arrow-up"></i></a>
               <div class="bg-line"></div>
             </section>
-            <!-- =========
-            End Content section
-            ===================================-->
 
-
-            <!-- =========
-            Start Footer section
-            ===================================-->
             <footer class="footer">
               Design By YanChangze
             </footer>
-            <!-- =========
-            End Footer section
-            ===================================-->
 
           </div>
         </div>
       </div>
     </div>
-    <!-- =========
-    End Wrapper Page
-    ===================================-->
 
-    <!-- =========
-    Text Showup Wait Document Ready
-    ===================================-->
     <div id="wait-page" class="text-center">Loading...</div>
 
-    <!-- =========
-    Link Config Custom styles
-    ===================================-->
+
 
     <a href="modal_configuration.html" class="configuration ajax_link"><i class="fa fa-cog"></i> Configuration</a>
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true"> </div>
 
 
 
-    <!-- =========
-    Javascript load 
-    ===================================-->
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+<!--    <script src="https://code.jquery.com/jquery.js"></script>-->
 
     <!-- jQuery animation page loader -->
     <script src='../assets/js/pace.min.js'></script>
 
     <!-- JS maps for gmap3 JavaScript plugins) -->
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../bootstrap/js/bootstrap.js"></script>
@@ -463,7 +324,7 @@
                   }
                   break;
             case "bubble":
-                  var name=jsonObject.name;
+                  var userName=jsonObject.name;
                   var facebookUrl=jsonObject.facebookUrl;
                   var relationship=jsonObject.relationship;
                   var favorite_quotes=jsonObject.favorite_quotes;
@@ -475,16 +336,63 @@
                   var political_views=jsonObject.political_views;
                   var birth_day=jsonObject.birth_day;
                   var professional_skills=jsonObject.professional_skills;
-                  console.log(name,facebookUrl,relationship,favorite_quotes,introduction,gender,language);
-                  var nodes = [ { name: "桂林" }, { name: "广州" },
-                    { name: "厦门" }, { name: "杭州" },
-                    { name: "上海" }, { name: "青岛" },
-                    { name: "天津" } ,{name:"信阳"}];
-
-                  var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
-                    { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
-                    { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
+                  var friendNameList=jsonObject.friendsList;
+                  console.log(userName,facebookUrl,relationship,favorite_quotes,introduction,gender,language);
+                  var nodes = [ { name: userName }, { name: facebookUrl },
+                    { name: relationship }, { name: favorite_quotes },
+                    { name: introduction }, { name: gender },
+                    { name: language } ,{name:interest_in},
+                      {name:religious_views},{name:political_views},
+                      {name:birth_day},{name:professional_skills},
+                      {name:"Friends"}];
+                  for(var s=0;s<friendNameList.length;s++){
+                      dic={name:friendNameList[s]};
+                      nodes.push(dic);
+                  }
+                    var edges=[];
+                    for(var t=1;t<13;t++){
+                        dic={source:0,target:t};
+                        edges.push(dic);
+                    }
+                    for(var q=0;q<friendNameList.length;q++){
+                        dic={source:12,target:q+13};
+                        edges.push(dic);
+                    }
+                  // var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
+                  //   { source : 0 , target: 3 } , { source : 0 , target: 4 } ,
+                  //   { source : 0 , target: 5 } , { source : 0 , target: 6 } ,{source:0,target:7}];
                   drawBubble(nodes,edges);
+                  break;
+              case "friendsData":
+                  var friendsJsonArray=jsonObject.friendsList;
+                  var friendsTab=document.getElementById('friends_table');
+                  var friendsTabTrs=friendsTab.getElementsByTagName('tr');
+                  for(var r=friendsTabTrs.length-1;r>1;r--){
+                      friendsTab.deleteRow(r);
+                  }
+                  for(var k1=0;k1<friendsJsonArray.length;k1++){
+                      var friendsOTr=document.createElement('tr');
+                      for(var m1=0;m1<5;m1++){
+                          var friendsOTd=document.createElement('td');
+                          friendsOTr.appendChild(friendsOTd);
+                      }
+                      friendsTab.appendChild(friendsOTr);
+                  }
+
+                  for(var ia=0;ia<friendsJsonArray.length;ia++){
+                      var friendCol=friendsTab.rows[ia+1].cells;
+                      var subFriendsJsonObj=friendsJsonArray[ia];
+                      var name=subFriendsJsonObj.name;
+                      var facebook_url=subFriendsJsonObj.facebook_url;
+                      var genders=subFriendsJsonObj.gender;
+                      var birthDay=subFriendsJsonObj.birth_day;
+                      var introductions=subFriendsJsonObj.introduction;
+                      friendCol[0].innerHTML =name;
+                      friendCol[1].innerHTML =facebook_url;
+                      friendCol[2].innerHTML=genders;
+                      friendCol[3].innerHTML=birthDay;
+                      friendCol[4].innerHTML=introductions;
+                  }
                   break;
           }
       };
@@ -553,7 +461,7 @@
           setMessageInnerHTML("dataQueryWebSocket连接关闭");
       };
 
-      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+
       window.onbeforeunload = function () {
           websocket.send('kafkastop');
           closeWebSocket();
@@ -644,13 +552,13 @@
           return uuid.join('');
       }
       function drawBubble(nodes,edges) {
-        var width=500;
-        var height= 500;
-        var svg = d3.select("svg");
-        svg.attr("x",300)
-                .attr("y",300)
-                .attr("width",1000)
-                .attr("height",1000);
+          var width=900;
+          var height= 800;
+          var svg = d3.select("svg");
+          svg.attr("x",500)
+              .attr("y",600)
+              .attr("width",width)
+              .attr("height",height);
 
         // var nodes = [ { name: "桂林" }, { name: "广州" },
         //   { name: "厦门" }, { name: "杭州" },
@@ -661,12 +569,12 @@
         //   { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
         //   { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
         /*初始化force*/
-        var force = d3.layout.force()
-                .nodes(nodes)
-                .links(edges)
-                .size([300,300])     //作用力的中心区域
-                .linkDistance(100)   //连线的长度
-                .charge([-100]);     //负数为排斥 正数为吸引
+          var force = d3.layout.force()
+              .nodes(nodes)
+              .links(edges)
+              .size([width,height])     //作用力的中心区域
+              .linkDistance(200)   //连线的长度
+              .charge([-1500]);     //负数为排斥 正数为吸引
         /*很关键 启动force*/
         force.start();
         /*添加连线*/
@@ -695,7 +603,7 @@
                 .attr("cy",function(d,i){
                   return i*30;
                 })
-                .attr("r",20)
+                .attr("r",30)
                 .style("fill",function(d,i){
                   return color(i);
                 })

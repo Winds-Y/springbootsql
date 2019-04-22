@@ -86,24 +86,10 @@ public class BodyController {
         return "all";
     }
 
-    @GetMapping("/login")
-    public String loginPage(Model model){
+    @GetMapping("/")
+    public String index(Model model){
         model.addAttribute("user", new User());
         System.out.println("in loginPage");
-
-//        ServerStatus serverStatus=new ServerStatus();
-//        serverStatus.setServer("");
-//        serverStatus.setServer_index(0);
-//        serverStatus.setStatus("stopped");
-//        serverStatusRepository.save(serverStatus);
-//
-//        ServerStatus serverStatus1=new ServerStatus();
-//        serverStatus1.setServer("");
-//        serverStatus1.setServer_index(0);
-//        serverStatus1.setStatus("stopped");
-//        serverStatusRepository.save(serverStatus1);
-
-
         TestKafkaConsumer consumerKafka = new TestKafkaConsumer();
         if(!Test.startThread){
             if(Test.run){
@@ -124,6 +110,26 @@ public class BodyController {
             }
         });
         watch.start();
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model){
+        model.addAttribute("user", new User());
+        System.out.println("in loginPage");
+
+//        ServerStatus serverStatus=new ServerStatus();
+//        serverStatus.setServer("");
+//        serverStatus.setServer_index(0);
+//        serverStatus.setStatus("stopped");
+//        serverStatusRepository.save(serverStatus);
+//
+//        ServerStatus serverStatus1=new ServerStatus();
+//        serverStatus1.setServer("");
+//        serverStatus1.setServer_index(0);
+//        serverStatus1.setStatus("stopped");
+//        serverStatusRepository.save(serverStatus1);
+
         return "login";
     }
 
@@ -151,6 +157,7 @@ public class BodyController {
                 TaskMessage taskMessage=new TaskMessage();
                 model.addAttribute("taskMessage",taskMessage);
                 System.out.println("in loginResult:登陆成功");
+
 
 //                Thread startKafkaThread=new Thread(new Runnable() {
 //                    @Override
@@ -246,12 +253,7 @@ public class BodyController {
         return "websocket";
     }
 
-    @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("user", new User());
-        System.out.println("in loginPage");
-        return "login";
-    }
+
 
 //    @KafkaListener(topics = {"cuc_receive_target_url"})
 //    public void consumer(String message){

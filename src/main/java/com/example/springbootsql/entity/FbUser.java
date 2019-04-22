@@ -1,5 +1,7 @@
 package com.example.springbootsql.entity;
 
+import java.util.List;
+
 /**
  * Created by: Changze
  * Date: 2019/4/20
@@ -19,6 +21,15 @@ public class FbUser {
     private String birth_day;
     private String professional_skills;
     private String ui_mask;
+    private List<String> friendsList;
+
+    public List<String> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(List<String> friendsList) {
+        this.friendsList = friendsList;
+    }
 
     public String getUi_mask() {
         return ui_mask;

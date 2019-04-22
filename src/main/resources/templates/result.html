@@ -7,11 +7,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style type="text/css">
+    html{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+    }
+    body{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        background: url("../assets/images/bg/login.png") no-repeat;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+    }
 
+</style>
 <body>
-    <br><br>
-    <h2 style="color:green;margin: 0 auto;">Result</h2>
-    <br><br>
+    <h2 style="color:green;margin: 30px auto;width: 100px;">Result</h2>
     <!--/*@thymesVar id="user" type="com.example.springbootsql.entity.User"*/-->
     <ul class="list-group" style="width:300px;margin: 0 auto;">
         <li class="list-group-item" th:text="'Name: ' + ${user.name}" style="margin: 20px auto;"></li>
@@ -21,15 +35,17 @@
         <li class="list-group-item" th:text="'City: ' + ${user.city}" style="margin: 20px auto;"></li>
     </ul>
 
-    <h4 style="margin: 20px auto;">
+    <h4 style="margin: 20px auto;width: 300px;">
         <span class="glyphicon glyphicon-saved" style="margin: 20px auto;"></span>
-        Insert into MySQL successfully!
+        Insert into DataBase successfully!
     </h4>
+    <div style="width: 240px;margin: 10px auto;">
+        <!--<a href="/greeting"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>-->
+        <a th:href="@{'/login'}"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to Login</button></a>
+        <!--<a href="/all"><button type="button" class="btn btn-warning">See Records</button></a>-->
+        <a th:href="@{'/all'}"><button type="button" class="btn btn-warning">See Records</button></a>
+    </div>
 
-    <!--<a href="/greeting"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>-->
-    <a th:href="@{'/greeting'}"><button type="button" class="btn btn-primary " style="margin: 0 auto;">Return to home</button></a>
-    <!--<a href="/all"><button type="button" class="btn btn-warning">See Records</button></a>-->
-    <a th:href="@{'/all'}"><button type="button" class="btn btn-warning">See Records</button></a>
 
 </body>
 

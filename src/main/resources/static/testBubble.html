@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <title>Bubble</title>
     <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
-<!--    <script type="text/javascript" src="js/d3.min.js"></script>-->
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/d3.min.js"></script>
+<!--    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
 
 </head>
 <body>
 <svg></svg>
 <script type="text/javascript">
-    var width=500;
+    var width=1400;
     var height= 500;
     var svg = d3.select("svg");
-    svg.attr("x",300)
-        .attr("y",300)
-        .attr("width",1000)
-        .attr("height",1000);
+    svg.attr("x",500)
+        .attr("y",600)
+        .attr("width",width)
+        .attr("height",height);
 
     var nodes = [ { name: "桂林" }, { name: "广州" },
         { name: "厦门" }, { name: "杭州" },
@@ -25,15 +25,15 @@
         { name: "天津" } ,{name:"信阳"}];
 
     var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
-        { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
-        { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
+        { source : 0 , target: 3 } , { source : 0 , target: 4 } ,
+        { source : 0 , target: 5 } , { source : 0 , target: 6 } ,{source:0,target:7}];
     /*初始化force*/
     var force = d3.layout.force()
         .nodes(nodes)
         .links(edges)
-        .size([300,300])     //作用力的中心区域
-        .linkDistance(100)   //连线的长度
-        .charge([-100]);     //负数为排斥 正数为吸引
+        .size([width,height])     //作用力的中心区域
+        .linkDistance(200)   //连线的长度
+        .charge([-1500]);     //负数为排斥 正数为吸引
     /*很关键 启动force*/
     force.start();
     /*添加连线*/
@@ -62,7 +62,7 @@
         .attr("cy",function(d,i){
             return i*30;
         })
-        .attr("r",20)
+        .attr("r",40)
         .style("fill",function(d,i){
             return color(i);
         })

@@ -7,6 +7,12 @@
     <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
+        var edges=[];
+        for(var i=1;i<12;i++){
+            dic={source:0,target:i};
+            edges.push(dic);
+        }
+        console.log(edges);
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawSeriesChart);
         function drawSeriesChart() {
