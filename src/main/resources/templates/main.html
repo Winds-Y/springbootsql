@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="portrait-img-area">
-                  <img src="../assets/images/yangtes.png" alt="avatar" class="avatar"/>
+                  <img src="../assets/images/yangtse.png" alt="avatar" class="avatar"/>
                   <!--<div class="profile-links">-->
                     <!--<a href="" class="facebook"  data-toggle="tooltip" data-placement="left" title="Facebook"><i class="fa fa-facebook"></i></a>-->
                     <!--<a href="" class="twitter"  data-toggle="tooltip" data-placement="right" title="Twitter"><i class="fa fa-twitter"></i></a>-->
@@ -84,7 +84,7 @@
                   <li><a href="#resume" data-toggle="tab" data-menu="resume"><i class="icon-newspaper"></i>  <span>Task Progress</span></a></li>
                   <li><a href="#portfolio" data-toggle="tab" data-menu="portfolio"><i class="icon-folder-open"></i> <span>ServerStatus</span></a></li>
                   <li><a href="#blog" data-toggle="tab" data-menu="blog"><i class="icon-pencil"></i> <span >PersonInfo</span></a></li>
-                  <li><a href="#contact" data-toggle="tab" data-menu="contact"><i class="icon-mail"></i> <span>Contact</span></a></li>
+                  <li><a href="#contact" data-toggle="tab" data-menu="contact"><i class="icon-mail"></i> <span>FriendsInfo</span></a></li>
                 </ul>
               </nav>
 
@@ -171,7 +171,7 @@
                 <div id='portfolio' class="tab-pane fade">
                   <div class="body-content">
                       <h2 style="color:green;margin: 10px 350px;text-align:center">采集节点状态</h2>
-                    <table id="server_status_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
+                    <table id="server_status_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;border: 1px;">
                       <tr style="color:red">
                         <th>Server</th>
                         <th>ServerIndex</th>
@@ -184,6 +184,7 @@
                         <td th:text="${serverStatus.status}"></td>
                       </tr>
                     </table>
+<!--                      <button onclick="updateTable()">更改表格</button>-->
                   </div>
                 </div>
 
@@ -298,9 +299,14 @@
               case "serverStatus":
                   var jsonArray=jsonObject.server_status_list;
                   var table=document.getElementById('server_status_table');
-                  var trs=table.getElementsByTagName('tr');
-                  for(var j=trs.length-1;j>1;j--){
-                      table.deleteRow(j);
+                  var tbodys=table.getElementsByTagName('tbody');
+                  var tbody;
+                  if (tbodys!=null){
+                      tbody=tbodys[0];
+                  }
+                  var trs=tbody.getElementsByTagName('tr');
+                  for(var j=trs.length-1;j>=1;j--){
+                      tbody.deleteRow(j);
                   }
                   for(var k=0;k<jsonArray.length;k++){
                       var oTr=document.createElement('tr');
@@ -308,11 +314,11 @@
                         var oTd=document.createElement('td');
                         oTr.appendChild(oTd);
                       }
-                      table.appendChild(oTr);
+                      tbody.appendChild(oTr);
                   }
 
                   for(var i=0;i<jsonArray.length;i++){
-                    var col=table.rows[i+1].cells;
+                    var col=tbody.rows[i+1].cells;
                     var subJsonObj=jsonArray[i];
                     var server=subJsonObj.server;
                     var server_index=subJsonObj.server_index;
@@ -366,9 +372,14 @@
               case "friendsData":
                   var friendsJsonArray=jsonObject.friendsList;
                   var friendsTab=document.getElementById('friends_table');
-                  var friendsTabTrs=friendsTab.getElementsByTagName('tr');
-                  for(var r=friendsTabTrs.length-1;r>1;r--){
-                      friendsTab.deleteRow(r);
+                  var ftbodys=friendsTab.getElementsByTagName('tbody');
+                  var ftbody;
+                  if (ftbodys!=null){
+                      ftbody=ftbodys[0];
+                  }
+                  var friendsTabTrs=ftbody.getElementsByTagName('tr');
+                  for(var r=friendsTabTrs.length-1;r>=1;r--){
+                      ftbody.deleteRow(r);
                   }
                   for(var k1=0;k1<friendsJsonArray.length;k1++){
                       var friendsOTr=document.createElement('tr');
@@ -376,11 +387,11 @@
                           var friendsOTd=document.createElement('td');
                           friendsOTr.appendChild(friendsOTd);
                       }
-                      friendsTab.appendChild(friendsOTr);
+                      ftbody.appendChild(friendsOTr);
                   }
 
                   for(var ia=0;ia<friendsJsonArray.length;ia++){
-                      var friendCol=friendsTab.rows[ia+1].cells;
+                      var friendCol=ftbody.rows[ia+1].cells;
                       var subFriendsJsonObj=friendsJsonArray[ia];
                       var name=subFriendsJsonObj.name;
                       var facebook_url=subFriendsJsonObj.facebook_url;
@@ -424,10 +435,15 @@
           var jsonArray=$.parseJSON(jsonStr);
           var data_len=jsonArray.length;
           var table=document.getElementById('process_table');
+          var tbodys=table.getElementsByTagName('tbody');
+          var tbody;
+          if (tbodys!=null){
+              tbody=tbodys[0];
+          }
           console.log('data length: '+data_len);
-          var trs=table.getElementsByTagName('tr');
-          for(var j=trs.length-1;j>1;j--){
-              table.deleteRow(j);
+          var trs=tbody.getElementsByTagName('tr');
+          for(var j=trs.length-1;j>=1;j--){
+              tbody.deleteRow(j);
           }
           $("#add_progress_bar li").remove();
 
@@ -437,7 +453,7 @@
                   var oTd=document.createElement('td');
                   oTr.appendChild(oTd);
               }
-              table.appendChild(oTr);
+              tbody.appendChild(oTr);
           }
 
           console.log("table length"+table.rows.length);
@@ -560,14 +576,7 @@
               .attr("width",width)
               .attr("height",height);
 
-        // var nodes = [ { name: "桂林" }, { name: "广州" },
-        //   { name: "厦门" }, { name: "杭州" },
-        //   { name: "上海" }, { name: "青岛" },
-        //   { name: "天津" } ,{name:"信阳"}];
-        //
-        // var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,   //试了下，source和target不能换名字的
-        //   { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
-        //   { source : 1 , target: 5 } , { source : 1 , target: 6 } ,{source:2,target:7}];
+
         /*初始化force*/
           var force = d3.layout.force()
               .nodes(nodes)
@@ -639,6 +648,37 @@
           svg_texts.attr("x", function(d){ return d.x; })
                   .attr("y", function(d){ return d.y; });
         });
+      }
+
+      function updateTable() {
+          var table=document.getElementById('server_status_table');
+          var tbodys=table.getElementsByTagName('tbody');
+          var tbody=tbodys[0];
+          if(tbody!=null){
+              console.log('tbody is not null');
+          }else{
+              console.log('tbody is null');
+          }
+          var trs=tbody.getElementsByTagName('tr');
+          for(var j=trs.length-1;j>=1;j--){
+              tbody.deleteRow(j);
+          }
+          for(var k=0;k<2;k++){
+              var oTr=document.createElement('tr');
+              // oTr.style.height='38px';
+              for(var m=0;m<3;m++){
+                  var oTd=document.createElement('td');
+                  oTr.appendChild(oTd);
+              }
+              tbody.appendChild(oTr);
+          }
+          //
+          for(var i=0;i<2;i++){
+              var col=tbody.rows[i+1].cells;
+              col[0].innerHTML =1;
+              col[1].innerHTML =2;
+              col[2].innerHTML=3;
+          }
       }
   </script>
 </html>
