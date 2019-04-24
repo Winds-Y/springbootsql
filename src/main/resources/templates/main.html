@@ -69,6 +69,7 @@
                 <h1 class="name" th:text="${user.name}"><small>freelance web designer</small></h1>
                 <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
                 <a href="javascript:void(0)" class="btn btn-flat " id="open-content">Let's start!</a>
+                  <a th:href="@{'/login'}" class="btn btn-flat ">Logout</a>
                 <img src="../assets/images/arrow-down.png" alt="" class="img-arrow">
 
 
@@ -133,10 +134,10 @@
 
                     <div class="body-content">
                         <h2 style="color:green;margin: 10px 350px;text-align:center">采集进度</h2>
-                        <div class="box-block">
-                            <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" id="add_progress_bar">
+                        <div class="box-block" id="add_progress_bar">
+                            <ul th:each="taskmessage : ${taskFromData}" class="list-unstyled list-skills" >
                                 <li>
-                                    <span class="caption-skill" th:text="${taskmessage.targetPersonUrl}">Ruby On Rails</span>
+                                    <span class="caption-skill" th:text="'URL: '+${taskmessage.targetPersonUrl}+' TaskCode: '+${taskmessage.taskCode}+' Time: '+${taskmessage.time}">Ruby On Rails</span>
                                     <div class="progress">
                                         <div class="progress-bar" th:style="'width:'+${taskmessage.progress}+'%'">
                                             <span th:text="${taskmessage.progress}+'%'"></span>
@@ -144,24 +145,22 @@
                                     </div>
                                 </li>
                             </ul>
-
-
                         </div>
 
-                        <table id="process_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">
-                            <tr style="color:red">
-                                <th>TIME</th>
-                                <th>TASKCODE</th>
-                                <th>URL</th>
-                                <th>PROCESS</th>
-                            </tr>
-                            <tr th:each="taskmessage : ${taskFromData}">
-                                <td th:text="${taskmessage.time}"></td>
-                                <td th:text="${taskmessage.taskCode}"></td>
-                                <td th:text="${taskmessage.targetPersonUrl}"></td>
-                                <td th:text="${taskmessage.progress}"></td>
-                            </tr>
-                        </table>
+<!--                        <table id="process_table" class="table table-bordered table table-hover" style="width:800px;margin: 0 auto;">-->
+<!--                            <tr style="color:red">-->
+<!--                                <th>TIME</th>-->
+<!--                                <th>TASKCODE</th>-->
+<!--                                <th>URL</th>-->
+<!--                                <th>PROCESS</th>-->
+<!--                            </tr>-->
+<!--                            <tr th:each="taskmessage : ${taskFromData}">-->
+<!--                                <td th:text="${taskmessage.time}"></td>-->
+<!--                                <td th:text="${taskmessage.taskCode}"></td>-->
+<!--                                <td th:text="${taskmessage.targetPersonUrl}"></td>-->
+<!--                                <td th:text="${taskmessage.progress}"></td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
                     </div>
                     <label id="clock"></label>
 
@@ -263,6 +262,21 @@
 
   </body>
   <script>
+      Date.prototype.Format = function (fmt) {
+          var o = {
+              "M+": this.getMonth() + 1, //月份
+              "d+": this.getDate(), //日
+              "H+": this.getHours(), //小时
+              "m+": this.getMinutes(), //分
+              "s+": this.getSeconds(), //秒
+              "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+              "S": this.getMilliseconds() //毫秒
+          };
+          if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+      };
       var int=self.setInterval("clock()",50);
       function clock() {
           var realTime=new Date();
@@ -530,9 +544,9 @@
           });
           $('#name').val("");
           $('#url').val("");
-          var xxx1='XXX1';
+          var processBarWords="URL: "+url+"    TaskCode: "+taskCode+'     Time: '+new Date().Format('yyyy-MM-dd HH:mm:ss');
           var num='0%';
-          var txt='<li><span class="caption-skill">'+xxx1+'</span><div class="progress"><div class="progress-bar" style="width: '+num+';"><span>'+num+'</span></div></div></li>';
+          var txt='<ul class="list-unstyled list-skills" ><li><span class="caption-skill">'+processBarWords+'</span><div class="progress"><div class="progress-bar" style="width: '+num+';"><span>'+num+'</span></div></div></li></ul>';
 
           $('#add_progress_bar').append(txt);
 
