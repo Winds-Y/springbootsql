@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint("/wbSocket")
+//@ServerEndpoint("/freshDatabase")
 public class WebSocket {
     private Session session;
     public static CopyOnWriteArraySet<WebSocket> wbSockets = new CopyOnWriteArraySet<>(); //此处定义静态变量，以在其他方法中获取到所有连接

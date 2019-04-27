@@ -10,9 +10,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @ServerEndpoint("/websocket")
 @Component
-public class WebSockTest {
+public class WebSockTestServer {
     private static int onlineCount=0;
-    private static CopyOnWriteArrayList<WebSockTest> webSocketSet=new CopyOnWriteArrayList<WebSockTest>();
+    private static CopyOnWriteArrayList<WebSockTestServer> webSocketSet=new CopyOnWriteArrayList<WebSockTestServer>();
     private Session session;
 
     @OnOpen
@@ -40,7 +40,7 @@ public class WebSockTest {
         }
         System.out.println("来自客户端的消息："+message);
 //        群发消息
-        for (WebSockTest item:webSocketSet){
+        for (WebSockTestServer item:webSocketSet){
             try {
                 item.sendMessage(message);
             } catch (IOException e) {
@@ -63,10 +63,10 @@ public class WebSockTest {
         return onlineCount;
     }
     public static synchronized void addOnlineCount(){
-        WebSockTest.onlineCount++;
+        WebSockTestServer.onlineCount++;
     }
     public static synchronized void subOnlineCount(){
-        WebSockTest.onlineCount--;
+        WebSockTestServer.onlineCount--;
     }
 
 }

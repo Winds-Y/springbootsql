@@ -448,40 +448,43 @@
       function refreshData(jsonStr){
           var jsonArray=$.parseJSON(jsonStr);
           var data_len=jsonArray.length;
-          var table=document.getElementById('process_table');
-          var tbodys=table.getElementsByTagName('tbody');
-          var tbody;
-          if (tbodys!=null){
-              tbody=tbodys[0];
-          }
-          console.log('data length: '+data_len);
-          var trs=tbody.getElementsByTagName('tr');
-          for(var j=trs.length-1;j>=1;j--){
-              tbody.deleteRow(j);
-          }
+          // var table=document.getElementById('process_table');
+          // var tbodys=table.getElementsByTagName('tbody');
+          // var tbody;
+          // if (tbodys!=null){
+          //     tbody=tbodys[0];
+          // }
+          // console.log('data length: '+data_len);
+          // var trs=tbody.getElementsByTagName('tr');
+          // for(var j=trs.length-1;j>=1;j--){
+          //     tbody.deleteRow(j);
+          // }
           $("#add_progress_bar li").remove();
 
-          for(var k=0;k<data_len;k++){
-              var oTr=document.createElement('tr');
-              for(var m=0;m<4;m++){
-                  var oTd=document.createElement('td');
-                  oTr.appendChild(oTd);
-              }
-              tbody.appendChild(oTr);
-          }
+          // for(var k=0;k<data_len;k++){
+          //     var oTr=document.createElement('tr');
+          //     for(var m=0;m<4;m++){
+          //         var oTd=document.createElement('td');
+          //         oTr.appendChild(oTd);
+          //     }
+          //     tbody.appendChild(oTr);
+          // }
 
-          console.log("table length"+table.rows.length);
+          // console.log("table length"+table.rows.length);
           for(var i=0;i<data_len;i++){
-              var col=table.rows[i+1].cells;
+              // var col=table.rows[i+1].cells;
               var jsonObject=jsonArray[i];
-              col[0].innerHTML =jsonObject.time;
-              col[1].innerHTML =jsonObject.task_code;
-              col[2].innerHTML=jsonObject.target_person_url;
-              col[3].innerHTML=jsonObject.task_progress;
-              console.log(jsonObject.task_progress);
+              var url=jsonObject.target_person_url;
+              var taskCode=jsonObject.task_code;
+              var time=jsonObject.time;
+              // col[0].innerHTML =jsonObject.time;
+              // col[1].innerHTML =jsonObject.task_code;
+              // col[2].innerHTML=jsonObject.target_person_url;
+              // col[3].innerHTML=jsonObject.task_progress;
+              // console.log(jsonObject.task_progress);
               var task_progress=jsonObject.task_progress+'%';
-              var task_code=jsonObject.task_code;
-              var txt='<li><span class="caption-skill">'+task_code+'</span><div class="progress"><div class="progress-bar" style="width: '+task_progress+';"><span>'+task_progress+'</span></div></div></li>';
+              var processBarWords="URL: "+url+"    TaskCode: "+taskCode+'     Time: '+time;
+              var txt='<ul class="list-unstyled list-skills" ><li><span class="caption-skill">'+processBarWords+'</span><div class="progress"><div class="progress-bar" style="width: '+task_progress+';"><span>'+task_progress+'</span></div></div></li></ul>';
               $('#add_progress_bar').append(txt);
           }
       }
